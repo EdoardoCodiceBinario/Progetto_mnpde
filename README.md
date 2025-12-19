@@ -47,10 +47,11 @@ u = u(x,y) & \text{on } \partial\Omega.
 $$
 
 
-**senza stabilizzazione**.  
 Per valori di $a < 0.125$ la dominazione del termine di trasporto è troppo pronunciata e
 non si osserva convergenza del metodo iterativo.
 
+Questo esempio evidenzia le problematiche che insorgono quando si va a risolvere mediante metodi FEM Galerkin
+problemi a diffusione dominante.
 
 
 
@@ -63,7 +64,7 @@ non si osserva convergenza del metodo iterativo.
 
 ---
 
-## **Cartella TrasDiff3**
+## **Cartella Trasporto_Diffusione_3**
 
 Il problema considerato è il medesimo del caso precedente, ma l’aperto è
 
