@@ -50,7 +50,7 @@ $$
 
 
 Per valori di $a < 0.125$ la dominazione del termine di trasporto è troppo pronunciata e
-non si osserva convergenza del metodo iterativo.
+non si osserva convergenza iterativa.
 
 Questo esempio evidenzia le problematiche che insorgono quando si va a risolvere mediante metodi FEM Galerkin
 problemi a diffusione dominante.
@@ -103,25 +103,21 @@ e **GLS**, analizzando il comportamento in termini di oscillazioni numeriche ed 
 variare dei parametri del problema.
 Il problema studiato ha la medesima soluzione dei precedenti ma una formulazione differente
 
-$$
-\begin{cases}
+$$\begin{cases}
 -a \Delta u + \mathbf{b}\cdot\nabla u +  u = f & \text{in } \Omega, 
 u = u(x,y) & \text{su } \partial \Omega.
-\end{cases}
-$$
+\end{cases}$$
 
 dove
 
-$$
-\mathbf{b}(x,y) = b \cdot
+$$\mathbf{b}(x,y) = b \cdot
 \begin{bmatrix}
 1 \\
 1
-\end{bmatrix}, 
-$$
+\end{bmatrix},$$
 
 E' stato dunque introdotto un parametro per il trasporto mentre quello di diffusione è stato posto a 0.025, si nota che per valori
-di b superiori ad 80 il metodo GLS non converge, mentre il metodo SUPG mostra convergenza più che ottimale, facendo riferimento alla convergenza prevista da Lemma di Ceà+Lemma di Bramble-Hilbert.
+di $b>80$ il metodo GLS non converge, mentre il metodo SUPG mostra convergenza più che ottimale, facendo riferimento alla convergenza prevista da Lemma di Ceà+Lemma di Bramble-Hilbert.
 
 | File / Cartella | Descrizione |
 |-----------------|-------------|
@@ -165,6 +161,37 @@ $$
 | **TrasDiffboh_gls.cpp / TrasDiffboh_gls** | Implementazione del metodo GLS. |
 | **parametri_boh_2d.prm** | File di parametri. |
 ---
+
+## **Cartella Oscillazioni**
+
+In questa cartella si produce un esempio dove si vede esplicitamente il fenomeno oscillatorio, combinato con uno strato limite presente
+sul bordo nelle vicinanze del punto (1,1).
+
+Andiamo a risolvere un altro problema:
+
+$$
+\begin{cases}
+-a \Delta u + \dfrac{\partial u}{\partial x} + \dfrac{\partial u}{\partial y} = 1 & \text{in } \Omega, \\
+u(x,y) = 0 & \text{su } \partial\Omega.
+\end{cases}
+$$
+
+Dove le condizioni sono:
+
+\[
+\begin{aligned}
+u(x,y) &= 0 && \text{su } \partial\Omega, \\
+f(x,y) &= 1 && \text{nel dominio } \Omega.
+\end{aligned}
+\]
+
+| File / Cartella | Descrizione |
+|-----------------|-------------|
+| **oscillazioni.cpp / oscillazioni** | Implementazione del metodo classico. |
+| **oscillazioni_gls.cpp / oscillazioni_gls** | Implementazione del metodo GLS. |
+| **parametri_comp_2d.prm** | File di parametri. |
+
+
 
 ## **Cartella Oscillazioni**
 
