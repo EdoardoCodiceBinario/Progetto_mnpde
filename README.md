@@ -15,8 +15,11 @@ $$
 
 Se si prova a risolvere rispetto ai metodi Galerkin standard il problema si nota che per valori di a che tendono a 0, e per valori
 di b che crescono vengono introdotte oscillazioni numeriche nel sistema che portano a non ottenre una convergenza iterativa.
+
 I metodi che vengono dunque proposti sono metodi di Petrov Galerkin detti di stabilizzazione, nel senso di eliminazione delle suddette oscillazioni.
+
 I metodi che sono presentati sono il Galerkin Least Square(GLS) e lo Streamline Upwind Petrov Galerkin(SUPG).
+
 Si tratta di cambiare il problema variazionale in un'altro che tenda al primo al raffinarsi della approssimazione.
 
 Di seguito è riportato il contenuto delle principali cartelle del repository.
