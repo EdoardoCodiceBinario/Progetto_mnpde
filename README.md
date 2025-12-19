@@ -8,8 +8,8 @@ La formulazione considerata è la seguente:
 
 $$
 \begin{cases}
--\nabla \cdot (a \nabla u) + \mathbf{b} \cdot \nabla u + c u = f & \text{in } \Omega, \\
-u = 0 & \text{on } \partial\Omega.
+-\nabla \cdot (a \nabla u) + \mathbf{b} \cdot \nabla u + c u = f & \Omega, \\
+u = 0 & \partial\Omega.
 \end{cases}
 $$
 
@@ -69,7 +69,6 @@ problemi a diffusione dominante.
 ## **Trasporto_Diffusione_3**
 
 Il problema considerato è il medesimo del caso precedente, ma l’aperto è
-
 $$
 \Omega = (0,1)^2,
 $$
