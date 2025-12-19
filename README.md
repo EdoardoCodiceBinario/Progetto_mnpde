@@ -179,8 +179,8 @@ $$
 \begin{bmatrix}
 30 (y-0.5) + 50 \sin(5 \pi y) \\
 -30 (x-0.5) + 50 \cos(5 \pi x)
-\end{bmatrix}, \\[1ex]
-c(x,y) &= 50 \, e^{-50((x-0.5)^2 + (y-0.5)^2)} + 15 \, \sin(5 \pi x) \cos(5 \pi y), \\[1ex]
+\end{bmatrix}, \\
+c(x,y) &= 50 \, e^{-50((x-0.5)^2 + (y-0.5)^2)} + 15 \, \sin(5 \pi x) \cos(5 \pi y), \\
 f(x,y) &= 20 \, \exp\Big(- (x-0.3)^2 - (y-0.1)^2 \Big)
 \end{aligned}
 $$
