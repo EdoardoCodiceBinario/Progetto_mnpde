@@ -1,0 +1,37 @@
+Valore di a (diffusione_coefficiente): 1e-06
+Exact solution expression: exp(-(x+y)/1e-6)
+Right hand side expression: -3*exp(-(x+y)/1e-6)/1e-6
+Solving problem in 2 space dimensions.
+ciclo: 0
+   Number of active cells: 16
+   Total number of cells: 21
+   Number of degrees of freedom: 25
+9 GMRES iterations needed to obtain convergence.
+Writing file: solution-dt3-diocane-2d_0.vtu
+ciclo: 1
+   Number of degrees of freedom: 81
+43 GMRES iterations needed to obtain convergence.
+Writing file: solution-dt3-diocane-2d_1.vtu
+ciclo: 2
+   Number of degrees of freedom: 289
+107 GMRES iterations needed to obtain convergence.
+Writing file: solution-dt3-diocane-2d_2.vtu
+ciclo: 3
+   Number of degrees of freedom: 1089
+303 GMRES iterations needed to obtain convergence.
+Writing file: solution-dt3-diocane-2d_3.vtu
+ciclo: 4
+   Number of degrees of freedom: 4225
+416 GMRES iterations needed to obtain convergence.
+Writing file: solution-dt3-diocane-2d_4.vtu
+ciclo: 5
+   Number of degrees of freedom: 16641
+650 GMRES iterations needed to obtain convergence.
+Writing file: solution-dt3-diocane-2d_5.vtu
+cells dofs       u_L2_norm           u_H1_norm       
+   16    25 1.19990416e-01    - 1.01766622e+00     - 
+   64    81 7.99107552e-02 0.59 1.34616768e+00 -0.40 
+  256   289 5.46775907e-02 0.55 1.83687711e+00 -0.45 
+ 1024  1089 3.79488207e-02 0.53 2.54518962e+00 -0.47 
+ 4096  4225 2.64295712e-02 0.52 3.53352880e+00 -0.47 
+16384 16641 1.81393661e-02 0.54 4.79561901e+00 -0.44 

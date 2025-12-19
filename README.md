@@ -46,7 +46,7 @@ u = u(x,y) & \text{on } \partial\Omega.
 \end{cases}
 $$
 
-Nella cartella sono presenti il file sorgente e l’eseguibile che risolvono il problema
+
 **senza stabilizzazione**.  
 Per valori di $a < 0.125$ la dominazione del termine di trasporto è troppo pronunciata e
 non si osserva convergenza del metodo iterativo.
@@ -59,8 +59,7 @@ non si osserva convergenza del metodo iterativo.
 | **TrasDiff2.cpp / TrasDiff2** | Implementazione del metodo FEM classico (Galerkin). |
 | **parametri_exp_2d.prm** | File di parametri del metodo. |
 | **run_comparison2.sh** | Script per il confronto tra metodo stabilizzato (TrasDiff3) e non stabilizzato. |
-| **results_td2vstd3/** | Risultati dell’errore per valori di $a$ prossimi al punto critico di convergenza; contiene anche gli output terminale e il file **tabella_td2_td3.txt**. |
-
+| **results_td2vstd3/** | Cartella degli output terminale e il file **tabella_td2_td3.txt** riassuntivo dell'ultima iterazione al variare di a. |
 
 ---
 
@@ -80,6 +79,17 @@ Per chi fosse interessato a possibili strategie di risoluzione del problema, si 
 Mediante stabilizzazione col metodo Galerkin Least Square(GLS) si arriva a convergenza iterativa
 per valori arbitrati di a, si osserva che l'ordine di convergenza dell'errore in norma L2 si stabilizza
 al valore di 1/2.
+
+Osserviamo che per la formulazione del problema i metodi SUPG e GLS coincidono.
+
+| File / Cartella | Descrizione |
+|-----------------|-------------|
+| **TrasDiff3.cpp / TrasDiff3** | Implementazione del metodo GLS/SUPG. |
+| **parametri_exp_2d.prm** | File di parametri del metodo. |
+| **run_comparison.sh** | Script per il calcolo dell'errore e ordine di convergenza  |
+| **results_exp** | Risultati dell’errore per valori di $a$ da 1 a e-15, il tutto si trova su **summary_table.txt**. |
+
+Da l'ultima tabella sono stati ricavati inoltre l'ordine di convergenza dell'errore di approssimazione in norma L2, il quale è importante sottlineare che abbiamo ordine di convergenza 1/2.
 
 ---
 
