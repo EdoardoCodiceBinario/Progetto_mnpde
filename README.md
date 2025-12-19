@@ -125,39 +125,6 @@ di $b>80$ il metodo GLS non converge, mentre il metodo SUPG mostra convergenza p
 
 ---
 
-## **Problema_senza_soluzione_esplicita**
-
-In questa cartella troviamo un esempio di problema che non sappiamo risolvere esplicitamente e nel quale la stabilizzazione è cruciale.
-Il problema studiato ha formulazione differenziale
-
-$$
-\begin{cases}
--\nabla \cdot (a \nabla u) + \mathbf{b} \cdot \nabla u + c u = f & \text{in } \Omega, \\
-u = 0 & \text{su } \partial \Omega.
-\end{cases}
-$$
-
-dove abbiamo:
-
-$$
-\mathbf{b}(x,y) =
-\begin{bmatrix}
-30 (y-0.5) + 50 \sin(5 \pi y) \\
--30 (x-0.5) + 50 \cos(5 \pi x)
-\end{bmatrix},
-\quad
-c(x,y) = 50 \, e^{-50((x-0.5)^2 + (y-0.5)^2)} + 15 \, \sin(5 \pi x) \cos(5 \pi y) \\ 
-f(x,y) = 20 \, \exp\Big(- (x-0.3)^2 - (y-0.1)^2 \Big)
-$$
-
-
-| File / Cartella | Descrizione |
-|-----------------|-------------|
-| **TrasDiffboh.cpp / TrasDiffboh** | Implementazione del metodo classico. |
-| **TrasDiffboh_gls.cpp / TrasDiffboh_gls** | Implementazione del metodo GLS. |
-| **parametri_boh_2d.prm** | File di parametri. |
----
-
 
 ## **Problema_senza_soluzione_esplicita**
 
