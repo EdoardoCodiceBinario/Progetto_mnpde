@@ -26,7 +26,7 @@ Di seguito è riportato il contenuto delle principali cartelle del repository.
 
 ---
 
-## **Cartella Trasporto_Diffusione_2**
+## **Trasporto_Diffusione_2**
 
 Consideriamo il problema con soluzione nota
 
@@ -66,7 +66,7 @@ problemi a diffusione dominante.
 
 ---
 
-## **Cartella Trasporto_Diffusione_3**
+## **Trasporto_Diffusione_3**
 
 Il problema considerato è il medesimo del caso precedente, ma l’aperto è
 
@@ -96,7 +96,7 @@ Da l'ultima tabella sono stati ricavati inoltre l'ordine di convergenza dell'err
 
 ---
 
-## **Cartella Confronto**
+## **Confronto**
 
 In questa cartella viene effettuato un confronto tra i metodi di stabilizzazione **SUPG**
 e **GLS**, analizzando il comportamento in termini di oscillazioni numeriche ed errori al
@@ -129,7 +129,7 @@ di $b>80$ il metodo GLS non converge, mentre il metodo SUPG mostra convergenza p
 
 ---
 
-## **Cartella Problema_senza_soluzione_esplicita**
+## **Problema_senza_soluzione_esplicita**
 
 In questa cartella troviamo un esempio di problema che non sappiamo risolvere esplicitamente e nel quale la stabilizzazione è cruciale.
 Il problema studiato ha formulazione differenziale
@@ -162,7 +162,7 @@ $$
 | **parametri_boh_2d.prm** | File di parametri. |
 ---
 
-## **Cartella Oscillazioni**
+## **Oscillazioni**
 
 In questa cartella si produce un esempio dove si vede esplicitamente il fenomeno oscillatorio, combinato con uno strato limite presente
 sul bordo nelle vicinanze del punto (1,1).
