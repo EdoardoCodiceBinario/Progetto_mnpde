@@ -57,6 +57,38 @@ TrasDiff2.cpp/TrasDiff2 ----> file con metodo fem classico, metodo Galerkin
 parametri_exp_2d.prm -------> file di parametri per il metodo
 run_comparison2.sh ---------> file shell per confrontare il metodo stabilizzato, i cui file si trovano nella cartella TrasDiff3 con quello non stabilizzato
 results_td2vstd3 -----------> cartella con i risultati dell'errore rispetto alla soluzione originali per valori vicino al punto critico di convergenza iterativa, sono presenti anche gli output da terminale dei due file, l'ultima iterazione è salvata, al variare di a, nel file tabella_td2_td3.txt
+
+
+
+Nella cartella si trovano:
+
+- **TrasDiff2.cpp / TrasDiff2**  
+  File sorgente ed eseguibile che implementano il metodo FEM classico
+  (metodo di Galerkin).
+
+- **parametri_exp_2d.prm**  
+  File di parametri utilizzato per il metodo.
+
+- **run_comparison2.sh**  
+  Script shell per il confronto tra il metodo non stabilizzato e il metodo
+  stabilizzato, i cui file si trovano nella cartella **TrasDiff3**.
+
+- **results_td2vstd3/**  
+  Cartella contenente i risultati dell’errore rispetto alla soluzione esatta
+  per valori di $a$ prossimi al punto critico di convergenza iterativa.  
+  Sono inoltre presenti gli output da terminale dei due eseguibili; l’ultima
+  iterazione, al variare di $a$, è salvata nel file
+  **tabella_td2_td3.txt**.
+
+
+| File / Cartella | Descrizione |
+|-----------------|-------------|
+| **TrasDiff2.cpp / TrasDiff2** | Implementazione del metodo FEM classico (Galerkin). |
+| **parametri_exp_2d.prm** | File di parametri del metodo. |
+| **run_comparison2.sh** | Script per il confronto tra metodo stabilizzato (TrasDiff3) e non stabilizzato. |
+| **results_td2vstd3/** | Risultati dell’errore per valori di $a$ prossimi al punto critico di convergenza; contiene anche gli output terminale e il file **tabella_td2_td3.txt**. |
+
+
 ---
 
 ## **Cartella TrasDiff3**
