@@ -1,0 +1,19 @@
+subsection Problem parameters
+  set Finite element degree = 1
+  set Initial refinement = 2
+  set Number of cycles = 1
+  set Exact solution expression = x + y*(1 - x) + (exp(g) - exp(g*(1-x)*(1-y))) / (1 - exp(g))
+  set Right hand side expression = g*exp(g*(1-x)*(1-y)) * (g*a*(x-1)*(x-1)+g*a*(y-1)*(y-1)+ 2-x-y) / (1-exp(g)) + 2 - x - y
+  set Coefficiente diffusione = 0.1
+end
+
+subsection Convergence table
+  set Enable computation of the errors = true
+  set Error file name                  = errors4_no_stab.txt
+  set Error precision                  = 3
+  set Exponent for p-norms             = 2
+  set Extra columns                    = dofs, cells
+  set List of error norms to compute   = Linfty_norm, L2_norm, H1_norm
+  set Rate key                         = dofs
+  set Rate mode                        = reduction_rate_log2
+end

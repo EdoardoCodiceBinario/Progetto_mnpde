@@ -1,0 +1,18 @@
+subsection Problem parameters
+  set Finite element degree = 1
+  set Initial refinement = 2
+  set Number of cycles = 6
+  set Exact solution expression = exp(-(x+y)/a)
+  set Right hand side expression = -3*exp(-(x+y)/a)/a
+  set Coefficiente diffusione = 0.01
+end
+
+subsection Convergence table
+  set Enable computation of the errors = true
+  set Error file name                  = errors2.txt
+  set Error precision                  = 8
+  set Exponent for p-norms             = 2
+  set List of error norms to compute   = L2_norm, H1_norm
+  set Rate key                         = cells
+  set Rate mode                        = reduction_rate_log2
+end

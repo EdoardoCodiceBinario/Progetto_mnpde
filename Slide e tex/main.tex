@@ -1,0 +1,903 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{graphicx}  % Per collegamenti ipertestuali
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usepackage{lmodern}
+
+\usepackage{tikz}
+
+
+
+\def\colortheme{dark} % preset themes available are lighten, light, dark
+\def\alertcolor{dark} % preset themes available are lighten, light, dark
+\def\upperbar{\true} % i want upper index/navigation bar, \true or \false
+\def\bottomsectionbar{\true} % i want bottom bar with Title and Frame/Slide number, \true or \false
+\def\bottomtitlebar{\true} % i want bottom bar with Section and Institute, \true or \false
+%%\usetheme{Madrid} poi sistemiamo 
+\usecolortheme{orchid}
+% % %
+  \setbeamertemplate{headline}{}
+% % %
+\title{Stabilizzazione di equazioni di diffusione-trasporto-reazione:
+Metodi di stabilizzazione
+}
+%\subtitle{Subtitle}
+\author{Edoardo Morganti}
+\institute
+{
+  Università di Pisa
+}
+\date{4 Luglio, 2025}
+
+\begin{document}
+
+
+%%\begin{frame}{Frame Title}
+%%    \titlepage% optional. First page
+%%\end{frame}
+
+% background per la sola titlepage
+% background per la sola titlepage
+\setbeamertemplate{background}{
+  \includegraphics[width=\paperwidth,height=\paperheight,trim={200 0 200 0},clip]{apertura.png}
+}
+\begin{frame}[plain]
+\centering
+%%\vspace{2.5cm}
+{\Huge \bfseries Equazioni di 
+\\
+trasporto–diffusione–
+\\reazione
+}
+\\
+\vspace{3.5cm}
+{\huge \bfseries Metodi di stabilizzazione}
+\vspace{0.3cm}
+%%\hrule height 2pt width 0.8\textwidth
+\end{frame}
+% reset background per tutte le altre slide
+\setbeamertemplate{background}{}
+
+
+% Introduzione con animazione su stessa slide
+\begin{frame}{Panoramica}
+  \tableofcontents
+\end{frame}
+\begin{section}{Introduzione}
+\begin{frame}{Esempi}
+
+\begin{columns}[T, onlytextwidth]
+   
+    \begin{column}{0.45\textwidth} % prima colonna leggermente più larga
+        \textbf{Problema di Helmholtz}
+        \[
+        \begin{cases}
+        \Delta u + k^2 u = f \quad \Omega, \\
+        u = g \quad \partial\Omega
+        \end{cases}
+        \]
+    \end{column}
+\begin{column}{0.05\textwidth}
+\centering
+\rule{0.5pt}{0.36\textheight}   % <-- qui regoli spessore e altezza
+\end{column}
+    \begin{column}{0.50\textwidth}
+        \textbf{Equazioni di Van Roosbroeck}
+        \[
+        \begin{cases}
+        -\nabla \cdot (D_n \nabla n - \mu_n n \nabla \phi) = R(n,p) \\
+        -\nabla \cdot (D_p \nabla p + \mu_p p \nabla \phi) = R(n,p) \\
+        -\nabla \cdot (\varepsilon \nabla \phi) = q(p-n+C)
+        \end{cases}
+        \]
+    \end{column}
+    
+\end{columns}
+
+\end{frame}
+
+
+\begin{frame}{Diffusione-trasporto-reazione}
+\begin{block}{Formulazione}
+Noi studieremo le seguenti equazioni differenziali
+\[
+\left\{
+\begin{array}{ll}
+\displaystyle -\nabla\cdot(a \nabla u) + \mathbf{b}\cdot\nabla u+cu=f & \Omega  \\
+u=0 & \partial\Omega\\
+\end{array}
+\right.
+\]
+
+Dove 
+\begin{itemize}
+    \item a$\in L^{\infty}(\Omega)$,\qquad $a(x)\geq a_{0}>0$ 
+    \item \textbf{b}$\in [L^{\infty}(\Omega)]^{2}$
+    \item c$\in L^{2}(\Omega)$\qquad  $c(x)\geq 0 \quad$ \text{q.o in $\Omega$}
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}{Dalla formulazione alla soluzione}
+
+\begin{columns}[T,onlytextwidth]
+
+% --------- COLONNA SINISTRA ----------
+\begin{column}{0.45\textwidth}
+\textbf{Forma sintetica}
+
+\[
+A u = f
+\]
+
+\[
+a(u,v) = \langle f,v\rangle  \qquad \forall v\in V
+\]
+
+\end{column}
+
+% --------- LINEA VERTICALE ----------
+\begin{column}{0.05\textwidth}
+\centering
+\rule{0.5pt}{0.36\textheight}   % <-- qui regoli spessore e altezza
+\end{column}
+
+% --------- COLONNA DESTRA ----------
+\begin{column}{0.45\textwidth}
+
+\textbf{Forma estesa}
+
+\[
+\begin{cases}
+-\Delta u = f & \text{in } \Omega, \\
+u = 0 & \text{su } \partial\Omega
+\end{cases}
+\]
+
+\[
+\int_\Omega \nabla u \cdot \nabla v \,dx
+= \int_\Omega f\, v\,dx
+\]
+
+\end{column}
+
+\end{columns}
+
+% --------- BLOCCO SOTTO INVARIATO -----------
+\vspace{0.5cm}
+\begin{block}{Discretizzazione}
+Poniamo 
+$
+V_h = \langle v_i \rangle_{i=1}^n$, allora il problema diventa
+\[
+a(u_h, v_h) = \langle f, v_h \rangle  \qquad \forall v_h \in V_h.
+\]
+
+e conduce al sistema lineare
+\[
+Au = F,\qquad 
+A_{ij}=a(v_i,v_j),\quad F_j = (f,v_j).
+\]
+\end{block}
+
+
+\end{frame}
+
+
+
+
+\end{section}
+\begin{section}{Recap Teorico}
+    \begin{frame}{Lax-Milgram}
+        \begin{block}{Lemma di Lax-Milgram}
+        Sia V uno spazio di Hilbert e a:$V\times V\rightarrow \mathbb{R}$ un operatore bilineare, limitato e coercivo.
+        \\
+        Sia $f\in V^{'}$, allora il problema
+        \[
+        u\in V : \quad a(u,v)=\langle f,v\rangle  \quad \forall v\in V
+        \]
+        ammette soluzione, unica. 
+        \end{block}
+        
+        \begin{block}{Soluzione numerica}
+        Sia $V_{h}$ uno spazio finito-dimensionale, allora chiamiamo $u_{h}$ \textbf{soluzione numerica} se soddisfa
+        \[
+        a(u_{h},v_{h})=\langle f,v_{h}\rangle \qquad \forall v_{h}\in V_{h}
+        \]
+        \end{block}
+    \end{frame}
+        \begin{frame}{Stima errore}
+        \begin{block}{Lemma di Ceà}
+            Siano V e $V_{h}$ come sopra allora posto u la soluzione e $u_{h}$ la sua approssimazione numerica, abbiamo
+            \[
+            \lVert u-u_{h}\rVert\leq \frac{M}{\alpha}\inf_{v_{h}\in\ V_{h}}    \lVert u-v_{h}\rVert\
+            \]
+        \end{block}
+        
+    \begin{block}{A priori error estimate}
+        Nel contesto precedente abbiamo
+        \[
+        \lVert u-u_{h}\rVert_{s,p,\Omega}\lesssim h^{k+1-s}|u|_{k+1,p,\Omega} \quad \forall s\in[0,k]
+        \]
+    \end{block}
+    
+    \end{frame} 
+    
+    \begin{frame}{Formulazione debole}
+       \begin{block}{Ipotesi su TDR}
+           Il nostro spazio test sarà $V=H^{1}_{0}(\Omega)$, la forma bilineare quindi sarà
+           \[
+           a(u,v)=(a\nabla u,\nabla v)_{\Omega}+(v,\textbf{b}\cdot\nabla u)_{\Omega}+(cu,v)_{\Omega}
+           \]
+           che rispetterà l'ipotesi del lemma di Lax-Milgram se
+           \begin{equation}
+               -\frac{1}{2}\nabla\cdot \textbf{b}+c\geq 0 \quad \text{q.o in $\Omega$}
+           \end{equation}
+       \end{block}
+    \end{frame}
+
+\end{section}
+\begin{section}{Problema}
+    \begin{frame}{Un esempio}
+    
+    \begin{block}{Problema}
+    Consideriamo il seguente problema di cui sappiamo la soluzione
+    \[
+    u(x,y)=e^{-\frac{x+y}{a}}
+    \]
+    Sia dunque $\Omega=(-1,1)^{2}$
+    \[
+\left\{
+\begin{array}{ll}
+\displaystyle -a \Delta u + \frac{\partial u}{\partial x}=-\frac{3}{a}e^{-\frac{x+y}{a}} & \Omega  \\
+u(x,y) & \partial\Omega\\
+\end{array}
+\right.
+\]
+Osserviamo come la condizione (1) è soddisfatta indipendentemente dal parametro a.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Un esempio}
+     \centering
+\includegraphics[width=1.0\textwidth]{td2/td2-immagine.png}
+\end{frame}
+
+
+\begin{frame}{Problema}
+
+\centering
+\includegraphics[width=0.45\textwidth]{td2/plot_exp_1.jpg}
+\hfill
+\includegraphics[width=0.45\textwidth]{td2/plot_exp_0.175 (1).jpg}
+\end{frame}
+
+\begin{frame}{Problema}
+    \centering
+    \includegraphics[width=1.0\textwidth]{td2/gmres_vs_a (3).png}
+\end{frame}
+\begin{frame}{Un'osservazione sul problema}
+\begin{block}{Caso monodimensionale}
+Prendiamo  $\Omega=(0,1)$
+    \[
+\left\{
+\begin{array}{ll}
+\displaystyle -au^{''} + bu^{'}=0  \\
+u(0)=0 & u(1)=1 \\
+\end{array}
+\right.
+\]
+Introducendo un rilevamento dei dati sul bordo, il problema debole diventa
+\[
+\int_{0}^{1}(au^{'}v^{'}+bu^{'}v)dx=-\int_{0}^{1}bvdx \quad \forall v\in H_{0}^{1}(\Omega)
+\]
+Introduciamo il \textbf{numero di Peclet} globale 
+\[
+\mathbb{P}e_{g}:=\frac{bL}{a}
+\]
+\end{block}
+\end{frame}
+
+\begin{frame}{Una osservazione sul problema}
+    \begin{block}{Soluzione e Osservazioni}
+        La soluzione del problema è 
+        \[
+        u(x)=\frac{e^{\mathbb{P}e_{g}x}-1}{e^{\mathbb{P}e_{g}}-1} 
+        \]
+        Dunque se  $\mathbb{P}e_{g}\ll$ 1 avremo che
+        \[
+        u(x)\approx x
+        \]
+        Mentre se $\mathbb{P}e_{g}\gg 1$ avremo
+        \[
+        u(x)\approx e^{-\mathbb{P}e_{g}(1-x)}
+        \]
+    \end{block}
+\end{frame}
+\begin{frame}{Soluzione monodimensionale }
+       \centering
+\includegraphics[width=0.8\textwidth]{Problema_peclet/plot_peclet_mono.jpg}
+\end{frame}
+\begin{frame}{Soluzione numerica}
+    \begin{block}{Calcolo coefficienti}
+        Se passiamo alla formulazione con elementi finiti lineari continui e dando una partizione uniforme otteniamo il seguente sistema
+        \[
+        (\mathbb{P}e-1)u_{i+1}+2u_{i}-(\mathbb{P}e+1)u_{i-1}=0,\qquad \mathbb{P}e=\frac{|b|h}{2a}
+        \]
+        Che ci da
+        \[
+        u_{i}=\frac{1-(\frac{1+\mathbb{P}e}{1-\mathbb{P}e})^{i}}{1-(\frac{1+\mathbb{P}e}{1-\mathbb{P}e})^{N}}\qquad i=0,..,N
+        \]
+        Quindi, se abbiamo $\mathbb{P}e>1$, la soluzione sarà oscillante, mentre la soluzione esatta è monotona.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Soluzione numerica}
+    \centering
+    \includegraphics[width=1.0\textwidth]{Problema_peclet/confronto_soluzioni.jpg}
+    \\
+\end{frame}
+\begin{frame}{Perchè?}
+    \begin{block}{Boundary layers}
+        Abbiamo visto che quando $\mathbb{P}e_{g}\gg 1$, si ha che
+        \[
+        u(x)\approx e^{-\mathbb{P}e_{g}(1-x)}\approx \frac{b}{a} \quad a\rightarrow 0,x\rightarrow 1
+        \]
+        quindi abbiamo uno \textbf{strato limite}, cioè una regione molto piccola(ordine di $\mathbf{O}(\frac{a}{b}$)) dove la funzione ha gradiente in norma illimitato.
+        \\
+        Pertanto il fenomeno di oscillazione viene amplificato e rende rapidamente la matrice associata al problema 
+    \end{block}
+    \end{frame}
+
+    \begin{frame}{Strato Limite}
+        \centering
+        \includegraphics[width=1.0\textwidth]{td3/stratolimite_starship.png}
+        
+    \end{frame}
+
+    
+\begin{frame}{Perchè?}
+    \begin{block}{Coercività}
+        Le forti oscillazioni introdotte vanno a inficiare sulle ipotesi del lemma di Lax-Milgram e sulla invertibilità della matrice derivata dalla formulazione del problema, arrivando a non avere una convergenza del metodo iterativo.
+    \end{block}
+\end{frame}    
+
+\begin{frame}{Coercività}
+    \centering
+    \includegraphics[width=1.0\textwidth]{oscillazioni.png}
+\end{frame}
+
+\begin{frame}{Perchè?}
+    \begin{block}{Costanti}
+        In particolare, c'è da tenere di conto che le costanti di limitatezza M e di coercività $\alpha$ dipendano dalle funzioni del problema.
+        \begin{enumerate}
+            \item $M=\lVert a \rVert_{L^{\infty}}+\lVert \textbf{b} \rVert_{L^{\infty}} +K^{2}\lVert c \rVert_{L^{2}}$
+            \item $\alpha =\frac{a_{0}}{1+K_{\Omega}^{2}} $
+        \end{enumerate}
+    \end{block}
+    \begin{block}{Lemma di Ceà}
+        Quindi, ricordando il Lemma di Ceà
+        \[
+        \lVert u-u_{h} \rVert \leq \frac{M}{\alpha}\inf_{v_{h}\in V_{h}}\lVert u -v_{h}\rVert
+        \]
+        quindi il rapporto $\lVert  b\rVert_{L^{\infty}}/\rVert a\rVert_{L^{\infty}}$ e $\lVert c \rVert_{L^{2}}/\rVert a\rVert_{L^{\infty}}$ possono rendere vuota la maggiorazione
+    \end{block}
+    
+\end{frame}
+
+    
+\end{section}
+
+\begin{section}{Stabilizzazione}
+    \begin{frame}{Stabilizzazione}
+    \begin{block}{Metodo degli elementi finiti stabilizzanti}
+        La soluzione numerica che abbiamo usato finora è del tipo
+        \[
+        a(u_{h},v_{h})=\langle f,v_{h}\rangle\quad\forall v_{h}\in V_{h}
+        \]
+        L'idea della \textbf{stabilizzazione} è di risolvere un altro problema variazionale
+        \[
+        a_{h}(u_{h},v_{h})=F_{h}(v_{h})
+        \]
+        al fine di eliminare le oscillazioni numeriche.
+    \end{block}
+    \end{frame}
+
+
+    
+    \begin{frame}{Forte consistenza}
+        \begin{block}{Forte consistenza}
+            Definiamo
+            \[
+            \tau_{h}(u,v_{h}):=a_{h}(u,v_{h})-F_{h}(v_{h})
+            \]
+            e chiamiamo \textbf{errore di troncamento}
+            \[
+            \tau_{h}(u)=\sup\frac{| \tau_{h}(u,v_{h})|}{\Vert v_{h} \rVert_{V}}
+            \]
+            Un metodo si dice \textbf{consistente} se
+            \[
+            \lim_{h\rightarrow 0}\tau_{h}(u)=0
+            \]
+            diremo invece che è \textbf{fortemente consistente} se
+            \[
+            \tau_{h}(u)=0 \qquad \forall h
+            \]
+        \end{block}
+    \end{frame}
+
+    
+    \end{section}
+    \begin{section}{Metodi fortemente consistenti}
+        \begin{frame}{Parte Simmetrica e Antisimmetrica di un operatore}
+            \begin{block}{Definizione}
+                Sia L:$V\rightarrow V^{'}$, V spazio di Hilbert, diremo che è \textbf{simmetrico} se
+                \[
+                \langle Lu,v \rangle_{V}=\langle u,Lv \rangle_{V}\quad \forall u,v\in V
+                \]
+                diremo che è \textbf{antisimmetrico} se 
+                \[
+                 \langle Lu,v \rangle_{V}=-\langle u,Lv \rangle_{V}\quad \forall u,v\in V
+                \]
+            \end{block}
+            \begin{block}{Osservazione}
+                Ogni operatore può essere scomposto come somma della sua parte simmetrica e antisimmetrica
+                \[
+                Lu=L_{S}u+L_{SS}u
+                \]
+            \end{block}
+        \end{frame}
+        \begin{frame}{Scomposizione operatore}
+            \begin{block}{Osservazione}
+                Noi siamo interessati all'operatore, in forma conservativa e con a costante
+                \[
+                Lu=-a\Delta u+ \nabla\cdot(\textbf{b} u)+cu
+                \]
+                la cui scomposizione sarà
+                \[
+                Lu=\underbrace{-a\Delta u+[c+\frac{1}{2}\nabla \cdot \textbf{b}]u}_{L_{S}}+\underbrace{\frac{1}{2}[\nabla\cdot (\textbf{b}u)+\textbf{b}\cdot\nabla u]}_{L_{SS}}
+                \]
+            \end{block}
+        \end{frame}
+        \begin{frame}{Metodo GLS e SUPG}
+            \begin{block}{Formulazione}
+                Sia $V=H_{0}^{1}(\Omega)$ e a(u,v) la forma bilineare associata all'operatore L.
+                \\
+                Considereremo il problema di Galerkin generalizzato seguente
+                \[
+                a(u_{h},v_{h})+ \mathcal{L}_{h}(u_{h},f;v_{h})=(f,v_{h})\quad \forall v_{h}\in V_{h}
+                \]
+                facendo la scelta
+                \[
+                \mathcal{L}_{h}(u_{h},f;v_{h})=\mathcal{L}_{h}^{(\rho)}(u_{h},f;v_{h})=\sum_{K\in \mathcal{T}_{h}}(Lu_{h}-f,\tau_{K}S^{(\rho)}(v_{h}))_{L^{2}(K)}
+                \]
+                dove
+                \[
+                \mathcal{S}^{(\rho)}(v_{h})=L_{SS}(v_{h})+\rho L_{S}(v_{h})
+                \]
+            \end{block}
+        \end{frame}
+        \begin{frame}{Metodo GLS e SUPG}
+            \begin{block}{Osservazione}
+                Il metodo è fatto in maniera che si abbia 
+                \[
+                \mathcal{L}_{h}^{(\rho)}(u,f;v_{h})=0
+                \]
+                e pertanto è fortemente consistente. 
+            \end{block}
+            \begin{block}{Osservazione}
+                Al variare del parametro $\rho$ si vanno a definire i due metodi 
+                \begin{itemize}
+                    \item GLS: $\mathcal{L}_{h}^{(1)}(u_{h},f;v_{h})=\sum\limits_{K\in \mathcal{T}_{h}}(Lu_{h}-f,\tau_{K}L(v_{h}))_{L^{2}(K)}$
+                    \item SUPG: $  \mathcal{L}_{h}^{(0)}(u_{h},f;v_{h})=\sum\limits_{K\in \mathcal{T}_{h}}(Lu_{h}-f,\tau_{K}L_{SS}(v_{h}))_{L^{2}(K)}$
+                \end{itemize}
+            \end{block}
+        \end{frame}
+          \begin{frame}{Parametro di stabilizzazione}
+    \begin{block}{Definizione}
+        ricordiamo che il numero di peclet  locale si definisce come
+        \[
+        \mathbb{P}e_{K}=\frac{\lVert\textbf{b}(x)\rVert h_{K}}{2a(x)} \quad \forall x\in K, \quad \forall K\in \mathcal{T}_{h} 
+        \]
+        definiamo dunque il \textbf{parametro di stabilizzazione} come 
+        \[
+          \tau_{K}=\frac{h_{K}}{2\lVert\textbf{b}(x)\rVert}\xi(\mathbb{P}e_{K})
+        \]
+        Andiamo a dare una spiegazione il perchè di questa definizione
+    \end{block}
+    
+    \end{frame}
+
+    \begin{frame}{Parametro di stabilizzazione}
+        \begin{block}{Caso SUPG}
+            Se andiamo a risolvere il problema SUPG su $\Omega=(0,1)$ del problema di diffusione trasporto monodimensionale
+            otteniamo la scrittura variazionale
+            \[
+            a_{h}(u_{h},v_{h})=F_{h}(v_{h})
+            \]
+            dove
+            \[
+            a_{h}(u_{h},v_{h})=\int_{0}^{1}(au'v'+buv')dx+\int_{0}^{1}\tau|\textbf{b}|^{2}u'v' 
+            \]
+            \[
+            F_{h}(v_{h})=-\int_{0}^{1}\textbf{b}vdx
+            \]
+            
+        \end{block}   
+    \end{frame}
+
+    \begin{frame}{Caso SUPG}
+        \begin{block}{Viscosità}
+            Quindi è naturale introdurre un parametro, chiamato \textbf{viscosità artificiale}
+            \[
+            \mu=a(1+\tau\frac{|\textbf{b}|^{2}}{a})
+            \]
+            così da avere
+            \[
+            a_{h}(u_{h},v_{h})=\int_{0}^{1}\mu u'v'dx+\int_{0}^{1}\textbf{b}u'vdx
+            \]
+            $\tau$ è quindi una maniera di avere controllo sulla viscosità del sistema.
+        \end{block}
+    \end{frame}
+
+    \begin{frame}{Caso SUPG}
+        \begin{block}{Viscosità}
+            facendo quindi la scelta 
+            \[
+            \xi(x)=\coth(x)-\frac{1}{x}
+            \]
+            otteniamo 
+            \[
+            \mu=a(1+\phi(\mathbb{P}e_{g})), \qquad \phi(x)=x-1+B(2x)
+            \]
+            dove
+            \[
+            B(x)=\frac{x}{e^{x}-1}\quad x>0, \quad B(0)=1
+            \]
+        \end{block}
+    \end{frame}
+
+    \begin{frame}{Caso SUPG}
+        \begin{block}{Viscosità}
+            Osserviamo quindi che in questo caso avremo che il numero di Pèclet locale varrà
+            \[
+            \mathbb{P}e_{K}=\frac{bh}{2\mu}=\frac{\mathbb{P}e_{g}}{1+\phi(\mathbb{P}e_{g})}<1
+            \]
+            Dunque agendo sulla viscosità del sistema riusciamo ad eliminare le oscillazioni.
+        \end{block}
+    \end{frame}
+
+\begin{frame}{Caso SUPG}
+    \centering
+    \includegraphics[width=1.0\textwidth]{upwind (1).png}
+\end{frame}
+
+    \end{section}
+        
+        
+        
+        \begin{frame}{Metodo GLS}
+            \begin{block}{Stabilità ed errore}
+                Al fine di valutare i metodi presi in esame, andiamo a introdurre la \textbf{norma} $\rho$
+                \[
+                \lVert u\rVert_{(\rho)}^{2}=a\lVert \nabla u\rVert_{L^{2}(\Omega)}^{2}+\lVert \sqrt{\gamma}u\rVert_{L^{2}+(\Omega)}^{2}+\sum_{K\in\mathcal{T}_{h}}(\mathcal{S}^{(\rho)}u,\tau_{K}\mathcal{S}^{(\rho)}u)_{L^{2}(\Omega)}
+                \]
+                Dove abbiamo che $\gamma$ è una costante per cui, nel caso conservativo
+                \[
+                \frac{1}{2}\nabla\cdot \textbf{b}+c\geq \gamma>0
+                \]
+                Per mezzo di questa norma possiamo definire il concetto di \textbf{stabilità} dei metodi GLS e SUPG.
+            \end{block}
+        \end{frame}
+        \begin{frame}{Stabilità}
+            \begin{block}{Teorema, caso GLS}
+                 Sia $u_{h}$ la soluzione numerica ottenuta mediante il modello GLS, allora abbiamo che, per ogni parametro $\tau_{K}$, esiste una costante C tale che 
+                 \[
+                 \lVert u_{h}\rVert_{(1)}\leq C\lVert f\rVert_{L^{2}(\Omega)}
+                 \]
+            \end{block}
+            \begin{block}{Lemma}
+                Sia $a_{h}^{(1)}$ la forma bilineare associata al metodo, abbiamo
+                \[
+                a_{h}^{(1)}(v_{h},v_{h})=a\lVert \nabla v_{h}\rVert^{2}_{L^{2}(\Omega)}+\lVert\sqrt{\gamma}v_{h}\rVert_{L^{2}(\Omega)}^{2}+\sum_{K\in\mathcal{T}_{h}}(Lv_{h},\tau_{K}Lv_{h})_{L^{2}(\Omega)}
+                \]
+            \end{block}
+        \end{frame}
+        \begin{frame}{Stabilità}
+            \begin{block}{Dimostrazione}
+                useremo la \textit{disuguaglianza di Young}
+                \[
+                ab\leq\epsilon a^{2}+\frac{1}{4\epsilon}b^{2} \qquad \forall\epsilon>0\quad\forall a,b\in \mathbb{R}
+                \]
+                Andiamo a maggiorare termine a termine
+                \[
+                (f,u_{h})_{L^{2}(\Omega)}=(\frac{1}{\sqrt{\gamma}}f,\sqrt{\gamma}u_{h})_{L^{2}(\Omega)}\leq\lVert\frac{1}{\sqrt{\gamma}}f\rVert^{2}+\frac{1}{4}\lVert\sqrt{\gamma}u_{h}\rVert^{2}
+                \]
+                Mentre per l'altro membro
+                \[
+                \sum\limits_{K\in\mathcal{T}_{h}}(f,\tau_{K}Lu_{h})_{L^{2}(K)}= \sum\limits_{K\in\mathcal{T}_{h}}(\sqrt{\tau_{K}}f,\sqrt{\tau_{K}}Lu_{h})_{L^{2}(K)}
+                \]
+            \end{block}
+        \end{frame}
+        \begin{frame}{Stabilità}
+            \begin{block}{Dimostrazione}
+                Procediamo a usare Cauchy-Schwartz
+                \[
+                \sum\limits_{K\in\mathcal{T}_{h}}(\sqrt{\tau_{K}}f,\sqrt{\tau_{K}}Lu_{h})_{L^{2}(K)}\leq\sum\limits_{K\in\mathcal{T}_{h}}\lVert\sqrt{\tau_{K}}f\rVert_{L^{2}(K)}\lVert\sqrt{\tau_{K}}Lu_{h}\rVert_{L^{2}(K)}
+                \]
+                cioè otteniamo
+                \[
+                 \sum\limits_{K\in\mathcal{T}_{h}}(f,\tau_{K}Lu_{h})_{L^{2}(K)}\leq  \sum\limits_{K\in\mathcal{T}_{h}}(f,\tau_{K}f)_{L^{2}(K)}+\frac{1}{4} \sum\limits_{K\in\mathcal{T}_{h}}(Lu_{h},\tau_{K}Lu_{h})_{L^{2}(K)}
+                 \]
+                 osservando che $h_{K}\leq h$ e che $a_{h}^{(1)}(v_{h},v_{h})=\lVert u_{h}\rVert_{(1)}^{2}$
+            \end{block}
+        \end{frame}
+        \begin{frame}{Stabilità}
+            \begin{block}{Dimostrazione}
+                Otteniamo
+            \[
+                    \lVert u_{h}\rVert_{(1)}^{2}\leq \frac{4}{3}[\lVert\frac{1}{\sqrt{\gamma}}f\rVert^{2}_{L^{2}(\Omega)}+\sum\limits_{K\in\mathcal{T}_{h}}(\tau_{K}f,f)_{L^{2}(K)}]
+            \]
+            cioè
+            \[
+            \lVert u_{h}\rVert_{(1)}^{2}\leq C^{2}\lVert f\rVert^{2}_{L^{2}(\Omega)}
+            \]
+            dove
+            \[
+            C^{2}=\frac{4}{3}\max_{x\in \Omega}(\frac{1}{\gamma}+\tau_{K})
+            \]
+            \end{block}
+        \end{frame}
+        
+        \begin{frame}{Convergenza}
+            \begin{block}{Teorema}
+                Sia $V_{h}$ con la seguente proprietà: per ogni $v\in V\cap H^{r+1}(\Omega)$ esiste una $\hat{v}_{h}\in V_{h}$ per cui
+                \[
+                \sum_{i=0}^{2}\lVert v-\hat{v}_{h}\rVert_{H^{i}(\Omega)}\leq Ch_{k}^{r+1}|v|_{H^{r+1}(\Omega)} \qquad \forall K \in\mathcal{T}_{h}
+                \]
+                e supponiamo che il numero di Pèclet sia maggiore di 1 in ogni triangolo, allora
+                \[
+                \lVert u_{h}-u \rVert_{(1)}\leq Ch_{K}^{r+\frac{1}{2}}|u|_{H^{r+1}(\Omega)}
+                \]
+            \end{block}
+        \end{frame}
+
+    
+    \begin{section}{Test Numerici}
+         \begin{frame}{Ricordiamo}
+         
+             \begin{block}{Metodi}
+                 ricordiamo che siamo nel contesto
+                 \[
+                 a(u_{h},v_{h})+ \mathcal{L}_{h}(u_{h},f;v_{h})=(f,v_{h})\quad \forall v_{h}\in V_{h}
+                 \]
+                 
+                 e studiamo i due casi specifici 
+                 \[
+                  \textit{GLS:} \mathcal{L}_{h}^{(1)}(u_{h},f;v_{h})=\sum\limits_{K\in \mathcal{T}_{h}}(Lu_{h}-f,\tau_{K}L(v_{h}))_{L^{2}(T)} 
+                  \]
+                  \[
+                 \textit{ SUPG:}  \mathcal{L}_{h}^{(0)}(u_{h},f;v_{h})=\sum\limits_{K\in \mathcal{T}_{h}}(Lu_{h}-f,\tau_{K}L_{SS}(v_{h}))_{L^{2}(T)}
+                 \]
+             \end{block}
+             
+         \end{frame}   
+        \begin{frame}{GLS e SUPG}
+            \begin{block}{Osservazione}
+                Osserviamo che nel caso di elementi finiti lineari in cui si ha 
+                \[
+                \nabla \cdot \textbf{b}=0 \qquad c=0
+                \]
+                i due metodi coincidono.
+                \\
+                Infatti abbiamo che 
+                \[
+                \Delta u_{h}\big |_{K}=0 \Rightarrow Lu= \textbf{b}\cdot \nabla u
+                \]
+            \end{block}
+            
+        \end{frame}
+          \begin{frame}{GLS}
+              \begin{block}{Problema}
+                  Stiamo risolvendo il problema, questa volta con $\Omega=(0,1)^{2}$
+                  \[
+                  \left\{
+                \begin{array}{ll}
+                \displaystyle -a \Delta u + \frac{\partial u}{\partial x}=-\frac{3}{a}e^{-\frac{x+y}{a}} & \Omega  \\
+                u(x,y) & \partial\Omega\\
+                \end{array}
+                \right.
+            \]
+            del quale sappiamo la soluzione essere
+            \[
+                u(x,y)=e^{-\frac{x+y}{a}}
+            \]
+            vediamo il caso stabilizzato e quello non stabilizzato a confronto 
+              \end{block}
+          \end{frame}  
+ \begin{frame}{Iterazioni}
+     \centering
+     \includegraphics[width=1.0\textwidth]{td2/gmres_vs_a (3).png}
+     
+ \end{frame}
+ \begin{frame}{Iterazioni}
+     \centering
+     \includegraphics[width=0.9\textwidth]{td3/iterazioni_exp_stab.png}
+     
+ \end{frame}
+
+\begin{frame}{Convergenza}
+    \centering
+    \includegraphics[width=0.8\textwidth]{td3/errore_exp_stab (1).png}
+\end{frame}
+
+\begin{frame}{Ordine di Convergenza}
+    \centering
+    \includegraphics[width=0.8\textwidth]{td3/ordine_L2_vs_a_exp_gls.png}
+\end{frame}
+
+ \begin{frame}{GLS:Oscillazioni}
+        \begin{block}{Test}
+            Andiamo a considerare il problema su $\Omega=(-1,1)^{2}$
+                  \[
+                  \left\{
+                \begin{array}{ll}
+                \displaystyle -a \Delta u + \frac{\partial u}{\partial x}+\frac{\partial u}{\partial y}=1 & \Omega  \\
+                u(x,y)=0 & \partial\Omega\\
+                \end{array}
+                \right.
+            \]
+         Dove è stato messo a=0.001.
+        \end{block}
+        \end{frame}
+\begin{frame}{GLS:Oscillazioni}
+    \centering
+    \includegraphics[width=1.0\textwidth]{oscillazioni.png}
+\end{frame}
+\begin{frame}{GLS:Oscillazioni}
+    \centering
+    \includegraphics[width=1.0\textwidth]{no_oscillazioni.png}
+\end{frame}
+
+
+
+        
+   \begin{frame}{GLS vs SUPG}
+       \begin{block}{Esempio trasporto dominante}
+           Andiamo ora a considerare un'equazione c
+             \[
+\left\{
+\begin{array}{ll}
+\displaystyle -a \Delta u + \mathbf{b}\cdot\nabla u+cu=f & \Omega  \\
+u=u(x,y) & \partial\Omega\\
+\end{array}
+\right.
+            \]
+            e introduciamo un altro parametro reale b
+           \begin{align*}
+\mathbf{b}(x,y) &= b \cdot
+\begin{bmatrix}
+\displaystyle 1 \\
+\displaystyle 1
+\end{bmatrix} \\[1ex]
+c(x,y) &= 1 
+\end{align*}
+
+Osserviamo che quindi, avendo reazione non nulla i due metodi non sono equivalenti.
+\\
+La soluzione è la medesima del primo esempio.
+       \end{block}
+   \end{frame}
+
+\begin{frame}{GLS}
+    \centering 
+    \includegraphics[width=1.0 \textwidth]{trasporto_oscillazioni_gls.png}
+\end{frame}
+
+\begin{frame}{GLS}
+      \centering 
+    \includegraphics[width=1.0 \textwidth]{ordine_L2_vs_iterazioni_gls_b=80.png}
+\end{frame}
+\begin{frame}{GLS}
+    \begin{block}{Osservazione}
+        Il precedente grafico mostra come il metodo gls sia molto più suscettibile alla norma infinito del termine di trasporto, infatti per valori poco superiori a b=80 il sistema introduce delle oscillazioni troppo marcate che portano il problema a non avere convergenza iterativa.
+    \end{block}
+\end{frame}
+
+    \begin{frame}{Perchè?}
+            \begin{block}{Minimi quadrati}
+                ricordando che col metodo GLS aggiungiamo
+                \[
+                \mathcal{L}_{h}^{(1)}(u_{h},f;v_{h})=\sum_{K\in \mathcal{T}_{h}}(Lu_{h}-f,\tau_{K}L(v_{h}))_{L^{2}(T)}
+                \]
+                Che possiamo scrivere come 
+                \[
+                \mathcal{L}_{h}^{(1)}(v_{h},f;v_{h})=\sum_{T\in \mathcal{T}_{h}}\int_{K}\tau_{K}(Lv_{h})^{2}dK-(f,\tau_{K}Lv_{h})_{L^{2}(K)}
+                \]
+                e
+                \[
+                \mathcal{L}_{h}^{(1)}(u_{h},f;v_{h}) \rightarrow \mathcal{L}_{h}^{(1)}(u,f;v_{h})=0
+                \]
+            \end{block}
+        \end{frame}
+
+
+\begin{frame}{SUPG}
+    \centering 
+    \includegraphics[width=1.0 \textwidth]{trasporto_oscillazioni-supg.png}
+\end{frame}
+
+
+
+\begin{frame}{SUPG}
+    \centering
+    \includegraphics[width=1.0 \textwidth]{ordine_supg_trasporto.png}
+\end{frame}
+
+\begin{frame}{Perchè?}
+    \begin{block}{Streamline Upwind}
+        In questo caso osserviamo che, dato che il campo è a divergenza nulla
+        \[
+        L_{SS}v=\mathbf{b}\cdot \nabla u
+        \]
+        quindi, usando il medesimo ragionamento di prima, abbiamo un'attenzione specifica all'argomento di trasporto
+    \end{block}
+\end{frame}
+
+\begin{frame}{SUPG}
+    \centering
+    \includegraphics[width=1.0 \textwidth]{supg_b=e09.png}
+\end{frame}   
+    \begin{frame}{Test finale}
+        \begin{block}{Formulazione}
+            Consideriamo ora il caso da cui siamo partiti 
+            \[
+\left\{
+\begin{array}{ll}
+\displaystyle -\nabla\cdot(a \nabla u) + \mathbf{b}\cdot\nabla u+cu=f & \Omega  \\
+u=0 & \partial\Omega\\
+\end{array}
+\right.
+            \]
+            dove abbiamo
+           \begin{align*}
+\mathbf{b}(x,y) &= 
+\begin{bmatrix}
+\displaystyle 30 (y-0.5) + 50 \sin(5 \pi y) \\
+\displaystyle -30 (x-0.5) + 50 \cos(5 \pi x)
+\end{bmatrix} \\[1ex]
+c(x,y) &= \displaystyle 50 \, e^{-50((x-0.5)^2 + (y-0.5)^2)} + 15 \, \sin(5 \pi x) \cos(5 \pi y) \\[1ex]
+f(x,y) &= \displaystyle 20 \, \exp\Big(- (x-0.3)^2 - (y-0.1)^2 \Big)
+\end{align*}
+\end{block}
+\end{frame}
+
+
+
+
+\setbeamertemplate{background}{
+  \includegraphics[width=\paperwidth,height=\paperheight,trim={200 0 200 0},clip]{apertura.png}
+}
+\begin{frame}[plain]
+\centering
+%%\vspace{2.5cm}
+{\Huge \bfseries Grazie per la vostra attenzione
+}
+\\
+
+%%\hrule height 2pt width 0.8\textwidth
+\end{frame}
+% reset background per tutte le altre slide
+\setbeamertemplate{background}{}
+
+        \end{section}
+\end{document}
+
