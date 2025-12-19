@@ -1,0 +1,7 @@
+subsection Problem parameters
+  set Finite element degree = 1
+  set Initial refinement = 2
+  set Number of cycles = 8
+  set Right hand side expression = 20*exp((-(x-0.3)*(x-0.3)-(y-0.1)*(y-0.1)))
+  set Coefficiente diffusione = 0.1
+end
