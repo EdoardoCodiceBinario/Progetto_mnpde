@@ -178,40 +178,9 @@ $$
 
 Dove le condizioni sono:
 
-\[
-\begin{aligned}
-u(x,y) &= 0 && \text{su } \partial\Omega, \\
-f(x,y) &= 1 && \text{nel dominio } \Omega.
-\end{aligned}
-\]
 
 | File / Cartella | Descrizione |
 |-----------------|-------------|
 | **oscillazioni.cpp / oscillazioni** | Implementazione del metodo classico. |
 | **oscillazioni_gls.cpp / oscillazioni_gls** | Implementazione del metodo GLS. |
 | **parametri_comp_2d.prm** | File di parametri. |
-
-
-
-## **Cartella Oscillazioni**
-
-In questa cartella si produce un esempio dove si vede esplicitamente il fenomeno oscillatorio, questo combinato ad uno strato limite presente
-sul bordo nelle vicinanze del punto (1,1).
-
-Andiamo a risolvere un altro problema, ovvero 
-$$
-\begin{cases}
--a \Delta u + \dfrac{\partial u}{\partial x} + \dfrac{\partial u}{\partial y} = 1 & \text{in } \Omega, \\
-u(x,y) = 0 & \text{su } \partial\Omega.
-\end{cases}
-$$
-
-
-
-| File / Cartella | Descrizione |
-|-----------------|-------------|
-| **oscillazioni.cpp / oscillazioni** | Implementazione del metodo classico. |
-| **oscillazioni_gls.cpp / oscillazioni_gls** | Implementazione del metodo GLS. |
-| **parametri_comp_2d.prm** | File di parametri. |
-
-I grafici relativi si trovano nella cartella immagini
