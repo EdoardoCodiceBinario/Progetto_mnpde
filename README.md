@@ -35,7 +35,9 @@ u(x,y) = e^{-\frac{x+y}{a}}.
 $$
 
 Dove a è un parametro che andremo a variare per studiare il fenomeno della dominazione per diffusione.
+
 L’aperto di interesse è $\Omega = (-1,1)^2$.  
+
 La formulazione forte del problema è
 
 $$
@@ -100,13 +102,16 @@ In questa cartella viene effettuato un confronto tra i metodi di stabilizzazione
 e **GLS**, analizzando il comportamento in termini di oscillazioni numeriche ed errori al
 variare dei parametri del problema.
 Il problema studiato ha la medesima soluzione dei precedenti ma una formulazione differente
+
 $$
 \begin{cases}
--a \Delta u + \mathbf{b}\cdot\nabla u +  u = f & \text{in } \Omega, \\
+-a \Delta u + \mathbf{b}\cdot\nabla u +  u = f & \text{in } \Omega, 
 u = u(x,y) & \text{su } \partial \Omega.
 \end{cases}
 $$
+
 dove
+
 $$
 \mathbf{b}(x,y) = b \cdot
 \begin{bmatrix}
@@ -114,6 +119,7 @@ $$
 1
 \end{bmatrix}, 
 $$
+
 E' stato dunque introdotto un parametro per il trasporto mentre quello di diffusione è stato posto a 0.025, si nota che per valori
 di b superiori ad 80 il metodo GLS non converge, mentre il metodo SUPG mostra convergenza più che ottimale, facendo riferimento alla convergenza prevista da Lemma di Ceà+Lemma di Bramble-Hilbert.
 
@@ -129,6 +135,57 @@ di b superiori ad 80 il metodo GLS non converge, mentre il metodo SUPG mostra co
 
 ## **Cartella Problema_senza_soluzione_esplicita**
 
-In questa cartella viene studiato un problema di trasporto-diffusione-reazione per il quale
-non è disponibile una soluzione analitica esplicita.  
-L’analisi è condotta esclusivamente tramite risultati numerici.
+In questa cartella troviamo un esempio di problema che non sappiamo risolvere esplicitamente e nel quale la stabilizzazione è cruciale.
+Il problema studiato ha formulazione differenziale
+
+$$
+\begin{cases}
+-\nabla \cdot (a \nabla u) + \mathbf{b} \cdot \nabla u + c u = f & \text{in } \Omega, \\
+u = 0 & \text{su } \partial \Omega.
+\end{cases}
+$$
+
+dove abbiamo:
+
+$$
+\mathbf{b}(x,y) =
+\begin{bmatrix}
+30 (y-0.5) + 50 \sin(5 \pi y) \\
+-30 (x-0.5) + 50 \cos(5 \pi x)
+\end{bmatrix},
+\quad
+c(x,y) = 50 \, e^{-50((x-0.5)^2 + (y-0.5)^2)} + 15 \, \sin(5 \pi x) \cos(5 \pi y),
+\quad
+f(x,y) = 20 \, \exp\Big(- (x-0.3)^2 - (y-0.1)^2 \Big)
+$$
+
+
+| File / Cartella | Descrizione |
+|-----------------|-------------|
+| **oscillazioni.cpp / oscillazioni** | Implementazione del metodo classico. |
+| **oscillazioni_gls.cpp / oscillazioni_gls** | Implementazione del metodo GLS. |
+| **parametri_comp_2d.prm** | File di parametri. |
+---
+
+## **Cartella Oscillazioni**
+
+In questa cartella si produce un esempio dove si vede esplicitamente il fenomeno oscillatorio, questo combinato ad uno strato limite presente
+sul bordo nelle vicinanze del punto (1,1).
+
+Andiamo a risolvere un altro problema, ovvero 
+$$
+\begin{cases}
+-a \Delta u + \dfrac{\partial u}{\partial x} + \dfrac{\partial u}{\partial y} = 1 & \text{in } \Omega, \\
+u(x,y) = 0 & \text{su } \partial\Omega.
+\end{cases}
+$$
+
+
+
+| File / Cartella | Descrizione |
+|-----------------|-------------|
+| **oscillazioni.cpp / oscillazioni** | Implementazione del metodo classico. |
+| **oscillazioni_gls.cpp / oscillazioni_gls** | Implementazione del metodo GLS. |
+| **parametri_comp_2d.prm** | File di parametri. |
+
+I grafici relativi si trovano nella cartella immagini
