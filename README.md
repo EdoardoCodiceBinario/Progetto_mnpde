@@ -26,7 +26,7 @@ Di seguito è riportato il contenuto delle principali cartelle del repository.
 
 ---
 
-## **Cartella TrasDiff2**
+## **Cartella Trasporto_Diffusione_2**
 
 Consideriamo il problema con soluzione nota
 
@@ -51,34 +51,7 @@ Nella cartella sono presenti il file sorgente e l’eseguibile che risolvono il 
 Per valori di $a < 0.125$ la dominazione del termine di trasporto è troppo pronunciata e
 non si osserva convergenza del metodo iterativo.
 
-Nella cartella si trova:
 
-TrasDiff2.cpp/TrasDiff2 ----> file con metodo fem classico, metodo Galerkin
-parametri_exp_2d.prm -------> file di parametri per il metodo
-run_comparison2.sh ---------> file shell per confrontare il metodo stabilizzato, i cui file si trovano nella cartella TrasDiff3 con quello non stabilizzato
-results_td2vstd3 -----------> cartella con i risultati dell'errore rispetto alla soluzione originali per valori vicino al punto critico di convergenza iterativa, sono presenti anche gli output da terminale dei due file, l'ultima iterazione è salvata, al variare di a, nel file tabella_td2_td3.txt
-
-
-
-Nella cartella si trovano:
-
-- **TrasDiff2.cpp / TrasDiff2**  
-  File sorgente ed eseguibile che implementano il metodo FEM classico
-  (metodo di Galerkin).
-
-- **parametri_exp_2d.prm**  
-  File di parametri utilizzato per il metodo.
-
-- **run_comparison2.sh**  
-  Script shell per il confronto tra il metodo non stabilizzato e il metodo
-  stabilizzato, i cui file si trovano nella cartella **TrasDiff3**.
-
-- **results_td2vstd3/**  
-  Cartella contenente i risultati dell’errore rispetto alla soluzione esatta
-  per valori di $a$ prossimi al punto critico di convergenza iterativa.  
-  Sono inoltre presenti gli output da terminale dei due eseguibili; l’ultima
-  iterazione, al variare di $a$, è salvata nel file
-  **tabella_td2_td3.txt**.
 
 
 | File / Cartella | Descrizione |
