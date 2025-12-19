@@ -20,7 +20,7 @@ I metodi che vengono dunque proposti sono metodi di Petrov Galerkin detti di sta
 
 I metodi che sono presentati sono il Galerkin Least Square(GLS) e lo Streamline Upwind Petrov Galerkin(SUPG).
 
-Si tratta di cambiare il problema variazionale in un'altro che tenda al primo al raffinarsi della approssimazione.
+Si tratta di cambiare il problema variazionale in un'altro, privo di queste oscillazioni, con la proprietà di tendere al problema originale al raffinarsi delle iterazioni.
 
 Di seguito è riportato il contenuto delle principali cartelle del repository.
 
@@ -36,7 +36,7 @@ $$
 
 Dove a è un parametro che andremo a variare per studiare il fenomeno della dominazione per diffusione.
 
-L’aperto di interesse è $\Omega = (-1,1)^2$.  
+L’aperto di interesse è $\Omega = (-1,1)^2$ .  
 
 La formulazione forte del problema è
 
@@ -68,10 +68,7 @@ problemi a diffusione dominante.
 
 ## **Trasporto_Diffusione_3**
 
-Il problema considerato è il medesimo del caso precedente, ma l’aperto è
-$$
-\Omega = (0,1)^2,
-$$
+Il problema considerato è il medesimo del caso precedente, ma l’aperto è $$\Omega = (0,1)^2$$
 
 al fine di ridurre l’influenza dello **strato limite** nel fenomeno della stabilizzazione.  
 
@@ -160,6 +157,34 @@ $$
 | **TrasDiffboh_gls.cpp / TrasDiffboh_gls** | Implementazione del metodo GLS. |
 | **parametri_boh_2d.prm** | File di parametri. |
 ---
+
+
+## **Problema_senza_soluzione_esplicita**
+
+In questa cartella troviamo un esempio di problema che non sappiamo risolvere esplicitamente e nel quale la stabilizzazione è cruciale.  
+Il problema studiato ha formulazione differenziale
+
+$$
+\begin{cases}
+-\nabla \cdot (a \nabla u) + \mathbf{b} \cdot \nabla u + c u = f & \text{in } \Omega, \\
+u = 0 & \text{su } \partial \Omega.
+\end{cases}
+$$
+
+dove abbiamo:
+
+$$
+\begin{aligned}
+\mathbf{b}(x,y) &=
+\begin{bmatrix}
+30 (y-0.5) + 50 \sin(5 \pi y) \\
+-30 (x-0.5) + 50 \cos(5 \pi x)
+\end{bmatrix}, \\[1ex]
+c(x,y) &= 50 \, e^{-50((x-0.5)^2 + (y-0.5)^2)} + 15 \, \sin(5 \pi x) \cos(5 \pi y), \\[1ex]
+f(x,y) &= 20 \, \exp\Big(- (x-0.3)^2 - (y-0.1)^2 \Big)
+\end{aligned}
+$$
+
 
 ## **Oscillazioni**
 
