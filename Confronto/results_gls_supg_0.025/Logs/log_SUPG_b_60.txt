@@ -1,0 +1,28 @@
+Solving problem in 2 space dimensions.
+ciclo: 0
+   Number of active cells: 16
+   Total number of cells: 21
+   Number of degrees of freedom: 25
+6 GMRES iterations needed to obtain convergence.
+ciclo: 1
+   Number of degrees of freedom: 81
+28 GMRES iterations needed to obtain convergence.
+ciclo: 2
+   Number of degrees of freedom: 289
+73 GMRES iterations needed to obtain convergence.
+ciclo: 3
+   Number of degrees of freedom: 1089
+220 GMRES iterations needed to obtain convergence.
+ciclo: 4
+   Number of degrees of freedom: 4225
+485 GMRES iterations needed to obtain convergence.
+ciclo: 5
+   Number of degrees of freedom: 16641
+701 GMRES iterations needed to obtain convergence.
+cells dofs    u_L2_norm      u_H1_norm    
+   16    25 1.612e-01    - 1.068e+00    - 
+   64    81 9.838e-02 0.84 1.009e+00 0.10 
+  256   289 4.989e-02 1.07 7.661e-01 0.43 
+ 1024  1089 1.996e-02 1.38 4.460e-01 0.82 
+ 4096  4225 6.057e-03 1.76 1.956e-01 1.22 
+16384 16641 1.416e-03 2.12 7.539e-02 1.39 

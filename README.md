@@ -87,7 +87,7 @@ Osserviamo che per la formulazione del problema i metodi SUPG e GLS coincidono.
 | **TrasDiff3.cpp / TrasDiff3** | Implementazione del metodo GLS/SUPG. |
 | **parametri_exp_2d.prm** | File di parametri del metodo. |
 | **run_comparison.sh** | Script per il calcolo dell'errore e ordine di convergenza  |
-| **results_exp** | Risultati dell’errore per valori di $a$ da 1 a e-15, il tutto si trova su **summary_table.txt**. |
+| **results_exp** | Risultati dell’errore per valori di $a$ da 1 a e-15, un riassunto dei valori all'ultima iterazione di raffinamento si trova a **summary_table.txt**. |
 
 Da l'ultima tabella sono stati ricavati inoltre l'ordine di convergenza dell'errore di approssimazione in norma L2, il quale è importante sottlineare che abbiamo ordine di convergenza 1/2.
 
@@ -98,6 +98,31 @@ Da l'ultima tabella sono stati ricavati inoltre l'ordine di convergenza dell'err
 In questa cartella viene effettuato un confronto tra i metodi di stabilizzazione **SUPG**
 e **GLS**, analizzando il comportamento in termini di oscillazioni numeriche ed errori al
 variare dei parametri del problema.
+Il problema studiato ha la medesima soluzione dei precedenti ma una formulazione differente
+$$
+\begin{cases}
+-a \Delta u + \mathbf{b}\cdot\nabla u +  u = f & \text{in } \Omega, \\
+u = u(x,y) & \text{su } \partial \Omega.
+\end{cases}
+$$
+dove
+$$
+\mathbf{b}(x,y) = b \cdot
+\begin{bmatrix}
+1 \\
+1
+\end{bmatrix}, 
+$$
+E' stato dunque introdotto un parametro per il trasporto mentre quello di diffusione è stato posto a 0.025, si nota che per valori
+di b superiori ad 80 il metodo GLS non converge, mentre il metodo SUPG mostra convergenza più che ottimale, facendo riferimento alla convergenza prevista da Lemma di Ceà+Lemma di Bramble-Hilbert.
+
+| File / Cartella | Descrizione |
+|-----------------|-------------|
+| **TrasDiffComparison_gls.cpp / TrasDiffComparison_gls** | Implementazione del metodo GLS. |
+| **TrasDiffComparison_supg.cpp / TrasDiffComparison_supg** | Implementazione del metodo SUPG. |
+| **parametri_comp_2d.prm** | File di parametri dei metodi. |
+| **comparison_gls_supg_0.025_1-e+9.sh** | Script per il calcolo dell'errore e ordine di convergenza nel caso del metodo SUPG, i valori considerati sono da b che varia da 1 a e+9 |
+| **results_gls_supg_0.025** | Cartella dove si calcola i soliti parametri e l'ordine di convergenza dei due metodi a confronti per valori di b da 1 a 80  |
 
 ---
 
