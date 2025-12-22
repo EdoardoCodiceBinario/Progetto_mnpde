@@ -3,6 +3,7 @@
 Questa repository contiene i file utilizzati durante la realizzazione del progetto per il corso  
 **Metodi numerici per le equazioni alle derivate parziali**, con particolare attenzione ai
 metodi di stabilizzazione per problemi di **trasporto, diffusione e reazione**.
+La libreria principale di riferimento è deal.ii[https://dealii.org/current_release/download/]
 
 La formulazione considerata è la seguente:
 
@@ -70,9 +71,6 @@ problemi a diffusione dominante.
 ## **Trasporto_Diffusione_3**
 
 Il problema considerato è il medesimo del caso precedente, ma l’aperto è $$\Omega = (0,1)^2$$ al fine di ridurre l’influenza dello **strato limite** nel fenomeno della stabilizzazione.  
-
-Per chi fosse interessato a possibili strategie di risoluzione del problema, si rimanda a
-[**riferimento da inserire**].
 
 Mediante stabilizzazione col metodo Galerkin Least Square(GLS) si arriva a convergenza iterativa
 per valori arbitrati di a, si osserva che l'ordine di convergenza dell'errore in norma L2 si stabilizza
@@ -185,3 +183,9 @@ Dove le condizioni sono:
 | **oscillazioni_gls.cpp / oscillazioni_gls** | Implementazione del metodo GLS. |
 | **parametri_comp_2d.prm** | File di parametri. |
 |**file_vtu**|Cartella con file vtu stabilizzati e non stabilizzati, il valore del parametro di diffusione è di 0.001 per entrambi i gruppi di file|
+
+
+## Bibliografia
+
+- Modellistica Numerica per Problemi Differenziali, Springer: [link.springer.com/book/10](https://link.springer.com/book/10)
+- Repository di riferimento per codici e dispense del corso "Metodi numerici per equazioni alle derivate parziali": [Luca Heltai, nmpde](https://github.com/luca-heltai/nmpde)
