@@ -20,7 +20,7 @@ I metodi che vengono dunque proposti sono metodi di Petrov Galerkin, chiamaati d
 
 I metodi che sono presentati sono il Galerkin Least Square(GLS) e lo Streamline Upwind Petrov Galerkin(SUPG).
 
-Si tratta di cambiare il problema variazionale in un'altro, privo di queste oscillazioni, con la proprietà di tendere al problema originale al raffinarsi delle iterazioni.
+Si tratta di cambiare il problema variazionale in un altro, privo di queste oscillazioni, con la proprietà di tendere al problema originale al raffinarsi delle iterazioni.
 
 Di seguito è riportato il contenuto delle principali cartelle del repository.
 
@@ -61,16 +61,15 @@ problemi a diffusione dominante.
 |-----------------|-------------|
 | **TrasDiff2.cpp / TrasDiff2** | Implementazione del metodo FEM classico (Galerkin). |
 | **parametri_exp_2d.prm** | File di parametri del metodo. |
-| **run_comparison2.sh** | Script per il confronto tra metodo stabilizzato (TrasDiff3) e non stabilizzato. |
+| **run_comparison2.sh** | Script bash per il confronto tra metodo stabilizzato (TrasDiff3) e non stabilizzato. |
 | **results_td2vstd3/** | Cartella degli output terminale e il file **tabella_td2_td3.txt** riassuntivo dell'ultima iterazione al variare di a. |
+|**file_vtu**| File vtu della soluzione numerica ottenuta, il valore del termine di diffusione posto è 0.125| 
 
 ---
 
 ## **Trasporto_Diffusione_3**
 
-Il problema considerato è il medesimo del caso precedente, ma l’aperto è $$\Omega = (0,1)^2$$
-
-al fine di ridurre l’influenza dello **strato limite** nel fenomeno della stabilizzazione.  
+Il problema considerato è il medesimo del caso precedente, ma l’aperto è $$\Omega = (0,1)^2$$ al fine di ridurre l’influenza dello **strato limite** nel fenomeno della stabilizzazione.  
 
 Per chi fosse interessato a possibili strategie di risoluzione del problema, si rimanda a
 [**riferimento da inserire**].
@@ -85,8 +84,9 @@ Osserviamo che per la formulazione del problema i metodi SUPG e GLS coincidono.
 |-----------------|-------------|
 | **TrasDiff3.cpp / TrasDiff3** | Implementazione del metodo GLS/SUPG. |
 | **parametri_exp_2d.prm** | File di parametri del metodo. |
-| **run_comparison.sh** | Script per il calcolo dell'errore e ordine di convergenza  |
+| **run_comparison.sh** | Script bash per il calcolo dell'errore e ordine di convergenza  |
 | **results_exp** | Risultati dell’errore per valori di $a$ da 1 a e-15, un riassunto dei valori all'ultima iterazione di raffinamento si trova a **summary_table.txt**. |
+|**file_vtu**| File vtu della soluzione numerica, il valore del termine diffusivo è posto a 0.125 per comparazione con il metodo non stabilizzato|
 
 Da l'ultima tabella sono stati ricavati inoltre l'ordine di convergenza dell'errore di approssimazione in norma L2, il quale è importante sottlineare che abbiamo ordine di convergenza 1/2.
 
@@ -120,8 +120,9 @@ di $b>80$ il metodo GLS non converge, mentre il metodo SUPG mostra convergenza p
 | **TrasDiffComparison_gls.cpp / TrasDiffComparison_gls** | Implementazione del metodo GLS. |
 | **TrasDiffComparison_supg.cpp / TrasDiffComparison_supg** | Implementazione del metodo SUPG. |
 | **parametri_comp_2d.prm** | File di parametri dei metodi. |
-| **comparison_gls_supg_0.025_1-e+9.sh** | Script per il calcolo dell'errore e ordine di convergenza nel caso del metodo SUPG, i valori considerati sono da b che varia da 1 a e+9 |
+| **comparison_gls_supg_0.025_1-e+9.sh** | Script bash per il calcolo dell'errore e ordine di convergenza nel caso del metodo SUPG, i valori considerati sono da b che varia da 1 a e+9 |
 | **results_gls_supg_0.025** | Cartella dove si calcola i soliti parametri e l'ordine di convergenza dei due metodi a confronti per valori di b da 1 a 80  |
+|**file_vtu**|Cartella con file vtu, il parametro di diffusione è posto a 0.025 per entrambi i gruppi, si pone b=80 per il metodo GLS e b=e+9 per il metodo SUPG|
 
 ---
 
@@ -158,6 +159,7 @@ $$
 | **TrasDiffboh.cpp / TrasDiffboh** | Implementazione del metodo classico. |
 | **TrasDiffboh_gls.cpp / TrasDiffboh_gls** | Implementazione del metodo GLS. |
 | **parametri_boh_2d.prm** | File di parametri. |
+|**file_vtu**|Cartella con le iterazioni di raffinamento della soluzione ignota, il parametro di diffusione è posto a |
 
 
 ## **Oscillazioni**
@@ -182,3 +184,4 @@ Dove le condizioni sono:
 | **oscillazioni.cpp / oscillazioni** | Implementazione del metodo classico. |
 | **oscillazioni_gls.cpp / oscillazioni_gls** | Implementazione del metodo GLS. |
 | **parametri_comp_2d.prm** | File di parametri. |
+|**file_vtu**|Cartella con file vtu stabilizzati e non stabilizzati, il valore del parametro di diffusione è di 0.001 per entrambi i gruppi di file|
