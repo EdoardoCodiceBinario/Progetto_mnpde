@@ -3,7 +3,6 @@
 Questa repository contiene i file utilizzati durante la realizzazione del progetto per il corso  
 **Metodi numerici per le equazioni alle derivate parziali**, con particolare attenzione ai
 metodi di stabilizzazione per problemi di **trasporto, diffusione e reazione**.
-La libreria principale di riferimento è deal.ii[https://dealii.org/current_release/download/]
 
 La formulazione considerata è la seguente:
 
@@ -15,9 +14,9 @@ u = 0 & \partial\Omega.
 $$
 
 Se si prova a risolvere rispetto ai metodi Galerkin standard il problema si nota che per valori di a che tendono a 0, e per valori
-di b che crescono vengono introdotte oscillazioni numeriche nel sistema che portano a non ottenre una convergenza iterativa.
+di b che crescono vengono introdotte oscillazioni numeriche nel sistema che portano a non ottenere una convergenza iterativa.
 
-I metodi che vengono dunque proposti sono metodi di Petrov Galerkin, chiamaati di **stabilizzazione**, non nel senso usuale ma il termine indica l'eliminazione del rumore introdotto.
+I metodi che vengono dunque proposti sono metodi di Petrov Galerkin, detti di **stabilizzazione**, non nel senso usuale ma il termine indica l'eliminazione del rumore introdotto.
 
 I metodi che sono presentati sono il Galerkin Least Square(GLS) e lo Streamline Upwind Petrov Galerkin(SUPG).
 
@@ -44,8 +43,8 @@ La formulazione forte del problema è
 $$
 \begin{cases}
 -a \Delta u + \dfrac{\partial u}{\partial x}
-= -\dfrac{3}{a} e^{-\frac{x+y}{a}} & \text{in } \Omega, \\
-u = u(x,y) & \text{on } \partial\Omega.
+= -\dfrac{3}{a} e^{-\frac{x+y}{a}} &  \Omega, \\
+u = u(x,y) &  \partial\Omega.
 \end{cases}
 $$
 
@@ -73,7 +72,7 @@ problemi a diffusione dominante.
 Il problema considerato è il medesimo del caso precedente, ma l’aperto è $$\Omega = (0,1)^2$$ al fine di ridurre l’influenza dello **strato limite** nel fenomeno della stabilizzazione.  
 
 Mediante stabilizzazione col metodo Galerkin Least Square(GLS) si arriva a convergenza iterativa
-per valori arbitrati di a, si osserva che l'ordine di convergenza dell'errore in norma L2 si stabilizza
+per valori arbitrari di a, si osserva che l'ordine di convergenza dell'errore in norma L2 si stabilizza
 al valore di 1/2.
 
 Osserviamo che per la formulazione del problema i metodi SUPG e GLS coincidono.
@@ -86,7 +85,7 @@ Osserviamo che per la formulazione del problema i metodi SUPG e GLS coincidono.
 | **results_exp** | Risultati dell’errore per valori di $a$ da 1 a e-15, un riassunto dei valori all'ultima iterazione di raffinamento si trova a **summary_table.txt**. |
 |**file_vtu**| File vtu della soluzione numerica, il valore del termine diffusivo è posto a 0.125 per comparazione con il metodo non stabilizzato|
 
-Da l'ultima tabella sono stati ricavati inoltre l'ordine di convergenza dell'errore di approssimazione in norma L2, il quale è importante sottlineare che abbiamo ordine di convergenza 1/2.
+Dall'ultima tabella sono stati ricavati inoltre l'ordine di convergenza dell'errore di approssimazione in norma L2, il quale è importante sottolineare che abbiamo ordine di convergenza 1/2.
 
 ---
 
@@ -98,8 +97,8 @@ variare dei parametri del problema.
 Il problema studiato ha la medesima soluzione dei precedenti ma una formulazione differente
 
 $$\begin{cases}
--a \Delta u + \mathbf{b}\cdot\nabla u +  u = f & \text{in } \Omega, 
-u = u(x,y) & \text{su } \partial \Omega.
+-a \Delta u + \mathbf{b}\cdot\nabla u +  u = f &  \Omega \\ 
+u = u(x,y) &  \partial \Omega.
 \end{cases}$$
 
 dove
@@ -132,8 +131,8 @@ Il problema studiato ha formulazione differenziale
 
 $$
 \begin{cases}
--\nabla \cdot (a \nabla u) + \mathbf{b} \cdot \nabla u + c u = f & \text{in } \Omega, \\
-u = 0 & \text{su } \partial \Omega.
+-\nabla \cdot (a \nabla u) + \mathbf{b} \cdot \nabla u + c u = f &  \Omega, \\
+u = 0 & \partial \Omega.
 \end{cases}
 $$
 
@@ -157,7 +156,7 @@ $$
 | **TrasDiffboh.cpp / TrasDiffboh** | Implementazione del metodo classico. |
 | **TrasDiffboh_gls.cpp / TrasDiffboh_gls** | Implementazione del metodo GLS. |
 | **parametri_boh_2d.prm** | File di parametri. |
-|**file_vtu**|Cartella con le iterazioni di raffinamento della soluzione ignota, il parametro di diffusione è posto a |
+|**file_vtu**|Cartella con le iterazioni di raffinamento della soluzione ignota, il parametro di diffusione è posto ad 0.01 |
 
 
 ## **Oscillazioni**
@@ -169,8 +168,8 @@ Andiamo a risolvere un altro problema:
 
 $$
 \begin{cases}
--a \Delta u + \dfrac{\partial u}{\partial x} + \dfrac{\partial u}{\partial y} = 1 & \text{in } \Omega, \\
-u(x,y) = 0 & \text{su } \partial\Omega.
+-a \Delta u + \dfrac{\partial u}{\partial x} + \dfrac{\partial u}{\partial y} = 1 &  \Omega, \\
+u(x,y) = 0 & \partial\Omega.
 \end{cases}
 $$
 
@@ -189,3 +188,7 @@ Dove le condizioni sono:
 
 - Modellistica Numerica per Problemi Differenziali, Springer: [link.springer.com/book/10](https://link.springer.com/book/10)
 - Repository di riferimento per codici e dispense del corso "Metodi numerici per equazioni alle derivate parziali": [Luca Heltai, nmpde](https://github.com/luca-heltai/nmpde)
+
+## Librerie C++
+
+- - La libreria principale di riferimento è [deal.ii](https://dealii.org/current_release/download/)
