@@ -88,9 +88,9 @@ struct DiffTrasParameters
                             constants);                                            
   }
   
-  unsigned int fe_degree                 = 2;
+  unsigned int fe_degree                 = 1;
   unsigned int initial_refinement        = 2;
-  unsigned int n_cycles                  = 3;
+  unsigned int n_cycles                  = 6;
   std::string  rhs_expression            = "-3*exp(-(x+y)/g)/g";
   double  diffusione_coefficiente = 0.1; 
   
@@ -232,12 +232,7 @@ void DiffTras<dim>::assemble_system()
   Vector<double>     cell_rhs(dofs_per_cell);
 
   std::vector<types::global_dof_index> local_dof_indices(dofs_per_cell);
-  /*
-  float tau=1;  
-  float h=1;
-  float peclet;
-  float bnorm=1;  
-  */
+
   Tensor<1,dim> b;
 
   for (const auto &cell : dof_handler.active_cell_iterators())
@@ -246,24 +241,16 @@ void DiffTras<dim>::assemble_system()
       cell_matrix = 0;
       cell_rhs    = 0;
 
-      //h=cell->diameter();
  
 
       for (const unsigned int q_index : fe_values.quadrature_point_indices())
         for (const unsigned int i : fe_values.dof_indices())
           {
 
-            //float lap_i=trace(fe_values.shape_hessian(i, q_index));
 
             const auto &x_q = fe_values.quadrature_point(q_index);
             b= b_coefficient(x_q);
-            /*
-            b = b_coefficient(x_q);
-            bnorm = std::sqrt(b*b);
-            peclet=(h*bnorm)/(2*par.diffusione_coefficiente); 
 
-           tau = (h /(2*bnorm)) * funzione_peclet(peclet);
-           */
             for (const unsigned int j : fe_values.dof_indices())
               {
                 // termine di diffusione 
@@ -308,7 +295,7 @@ template <int dim>
 void DiffTras<dim>::solve()
 {
   PreconditionIdentity preconditioner;
-  SolverControl solver_control(10000000, 1e-12);
+  SolverControl solver_control(100000, 1e-12);
   SolverGMRES<Vector<double>> solver(solver_control);
   solver.solve(system_matrix, solution, system_rhs, preconditioner);
   constraints.distribute(solution);  

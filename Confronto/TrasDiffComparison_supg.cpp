@@ -1,10 +1,13 @@
 /*
 Questo file risolve il problema 
 -a*laplac(u)+b*grad(u))+c*u=f(x,y) su Omega
-dove b è un vettore, c è uno scalare.
-a è un coefficiente variabile. 
-Introduciamo il nuovo parametro di trasporto e andiamo a risolvere 
-mediante il metodo di stabilizzazione supg.
+dove b è il termine di trasporto, c quello di reazione e a il termine di diffusione.
+In particolare in questo file andiamo a introdurre due parametri al fine di confrontare il
+fenomeno di dominazione per diffusione e per trasporto.
+Noteremo che in questo caso, cioè dove la stabilizzazione è stata fatta mediante il metodo
+Streamline Upwind Petrov Galerkin, il fenomeno di dominazione mediante trasporto è stabilizzato
+in maniera migliore di quanto aspettato rispetto alla stima data dal Lemma di Cea e 
+dal Lemma Bramble-Hilbert.
 */
 
 
@@ -42,7 +45,6 @@ mediante il metodo di stabilizzazione supg.
 #include <fstream>
 #include <iostream>
 
-// librerie per es 2 
 #include <deal.II/numerics/error_estimator.h>
 #include <deal.II/grid/grid_refinement.h>
 
@@ -103,7 +105,7 @@ struct TrasdiffParameters
   std::string  exact_solution_expression = "exp(-(x+y)/a)";
   std::string  rhs_expression            = "-(2+2*b)*exp(-(x+y)/a)/a";
 
-  float diffusione_coefficiente = 1.0; // Coefficient for the transport term
+  float diffusione_coefficiente = 1.0; 
   float trasporto_coefficiente=0.1; 
   FunctionParser<dim> exact_solution;
   FunctionParser<dim> rhs_function;
@@ -127,7 +129,6 @@ Tensor<1, dim> b_coefficient(const Point<dim> &p)
 template <int dim>
 double c_coefficient(const Point<dim> &p)
 {
-  // Costante per il termine di reazione
   (void) p;
   return 1.0;
 }
@@ -136,7 +137,7 @@ double c_coefficient(const Point<dim> &p)
 
 float funzione_peclet(float peclet)
 {
-    if (peclet == 0.0) {
+    if (peclet < 1e-10) {
         return 0.0;
     }
     return (1.0 / std::tanh(peclet)) - 1.0 / peclet;
@@ -217,8 +218,7 @@ Trasdiff<dim>::setup_system()
                                            par.exact_solution,
                                            constraints);
 
-  // Create hanging node constraints
-  
+
   DoFTools::make_hanging_node_constraints(dof_handler, constraints);
   constraints.close();
 
@@ -352,7 +352,7 @@ template <int dim>
 void Trasdiff<dim>::solve()
 {
   PreconditionIdentity preconditioner;
-  SolverControl solver_control(100000000, 1e-10);
+  SolverControl solver_control(100000000, 1e-12);
   SolverGMRES<Vector<double>> solver(solver_control);
   solver.solve(system_matrix, solution, system_rhs,preconditioner);
   constraints.distribute(solution);  
@@ -403,7 +403,7 @@ Trasdiff<dim>::run()
   for (unsigned int cycle = 0; cycle < par.n_cycles; ++cycle)
     {
       std::cout << "ciclo: " << cycle << std::endl;
-      // studiarsi le lambda function
+
 
       if (cycle == 0)
 

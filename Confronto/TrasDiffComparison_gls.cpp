@@ -1,10 +1,15 @@
 /*
 Questo file risolve il problema 
--a*laplac(u)+b*grad(u))+c*u=f(x,y) su Omega
-dove b è un vettore, c è uno scalare.
-a è un coefficiente variabile. 
-Introduciamo il nuovo parametro di trasporto e andiamo a risolvere 
-mediante il metodo di stabilizzazione gls.
+-a*laplac(u)+b*grad(u)+c*u=f(x,y) su Omega
+dove b è il termine di trasporto, c di reazione
+a quello di diffusione. 
+In particolare in questo file andiamo a introdurre due parametri al fine di confrontare il
+fenomeno di dominazione per diffusione e per trasporto.
+Noteremo che in questo caso, cioè dove la stabilizzazione è stata fatta mediante il metodo
+Galerkin Least Square, il fenomeno di dominazione per trasporto è problematico, in particolare 
+per valori del parametro b maggiori di 80.
+Il metodo si dimostra convergente iterativamente per valori di a arbitrariamente piccoli, convergendo in 
+errore con ordine 1/2.
 */
 
 
@@ -41,7 +46,6 @@ mediante il metodo di stabilizzazione gls.
 #include <fstream>
 #include <iostream>
 
-// librerie per es 2 
 #include <deal.II/numerics/error_estimator.h>
 #include <deal.II/grid/grid_refinement.h>
 
@@ -93,19 +97,16 @@ struct TrasdiffParameters
     constants);
     rhs_function.initialize(FunctionParser<dim>::default_variable_names(),
                             {rhs_expression},
-                            constants);
-    //diffusione_function.initialize(FunctionParser<dim>::default_variable_names(),
-    //                        {diffusione_expression},
-    //                        constants);                                               
+                            constants);                                             
   }
   unsigned int fe_degree                 = 1;
-  unsigned int initial_refinement        = 3;
-  unsigned int n_cycles                  = 1;
+  unsigned int initial_refinement        = 2;
+  unsigned int n_cycles                  = 6;
   std::string  exact_solution_expression = "exp(-(x+y)/a)";
   std::string  rhs_expression            = "-(2+2*b)*exp(-(x+y)/a)/a";
 
-  float diffusione_coefficiente = 1.0; // Coefficient for the transport term
-  float trasporto_coefficiente = 1.0; // Coefficient for the transport term
+  float diffusione_coefficiente = 1.0; 
+  float trasporto_coefficiente = 1.0; 
   FunctionParser<dim> exact_solution;
   FunctionParser<dim> rhs_function;
 
@@ -127,7 +128,6 @@ Tensor<1, dim> b_coefficient(const Point<dim> &p)
 template <int dim>
 double c_coefficient(const Point<dim> &p)
 {
-  // Costante per il termine di diffusione
   (void) p;
   return 1.0;
 }
@@ -136,8 +136,7 @@ double c_coefficient(const Point<dim> &p)
 
 float funzione_peclet(float peclet)
 {
-    if (peclet == 0.0) {
-        // il limite tende a 0
+    if (peclet < 1e-9) {
         return 0.0;
     }
     return (1.0 / std::tanh(peclet)) - 1.0 / peclet;
@@ -217,8 +216,6 @@ Trasdiff<dim>::setup_system()
                                            0,
                                            par.exact_solution,
                                            constraints);
-
-  // Create hanging node constraints
   
   DoFTools::make_hanging_node_constraints(dof_handler, constraints);
   constraints.close();
@@ -427,7 +424,6 @@ Trasdiff<dim>::run()
   for (unsigned int cycle = 0; cycle < par.n_cycles; ++cycle)
     {
       std::cout << "ciclo: " << cycle << std::endl;
-      // studiarsi le lambda function
 
       if (cycle == 0)
 

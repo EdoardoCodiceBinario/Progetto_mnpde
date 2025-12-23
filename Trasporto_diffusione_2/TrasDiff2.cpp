@@ -1,6 +1,6 @@
 /*
 Questo file risolve il problema 
--a*laplac(u)+b*grad(u))+c*u=f(x,y) su Omega
+-a*laplac(u)+b*grad(u)+c*u=f(x,y) su Omega
 dove b è un vettore, c è uno scalare.
 a è un coefficiente variabile. 
 In questo caso la soluzione sarà 
@@ -180,7 +180,7 @@ template <int dim>
 void
 Trasdiff<dim>::make_grid()
 {
-  GridGenerator::hyper_cube(triangulation, 0, 1);
+  GridGenerator::hyper_cube(triangulation, -1, 1);
   triangulation.refine_global(par.initial_refinement);
 
   std::cout << "   Number of active cells: " << triangulation.n_active_cells()
@@ -205,7 +205,6 @@ Trasdiff<dim>::setup_system()
                                            par.exact_solution,
                                            constraints);
 
-  
   DoFTools::make_hanging_node_constraints(dof_handler, constraints);
   constraints.close();
 

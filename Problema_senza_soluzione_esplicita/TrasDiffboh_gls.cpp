@@ -1,5 +1,10 @@
 /*
-FILE sul boundary values problem con GLS
+Problema di trasporto–diffusione–reazione con campo di trasporto intenso
+e diffusione ridotta. 
+Non sappiamo la soluzione esatta.
+In questo caso il metodo di stabilizzazione è applicato ed
+è GLS (Galerkin Least Squares).
+Notiamo che abbiamo accesso a più valori di a
 */
 
 #include <deal.II/base/function.h>
@@ -89,37 +94,17 @@ struct DiffTrasParameters
   unsigned int initial_refinement        = 2;
   unsigned int n_cycles                  = 6;
   std::string  rhs_expression            = "-3*exp(-(x+y)/g)/g";
-  double  diffusione_coefficiente = 0.001; // Coefficient for diffusion 
+  double  diffusione_coefficiente = 0.001; 
   
   FunctionParser<dim> rhs_function;
 
   ParameterHandler prm;
 };
-/*
-template <int dim>
-Tensor<1, dim> b_coefficient(const Point<dim> &p)
-{
-  Tensor<1, dim> b;  
-  b[0] = 1;
-  b[1] = 0.5;
-  (void)p; // Evita warning per parametro non usato
-  return b;
-}
-*/
 
-/*
-template <int dim>
-double c_coefficient(const Point<dim> &p)
-{
-  (void)p; // Evita warning per parametro non usato
-  return 100.0; 
-}
-*/
 
 template <int dim>
 double c_coefficient(const Point<dim> &p)
 {
-    // zona centrale con reazione positiva, bordo con reazione negativa
     double cx = std::exp(-50 * ((p[0]-0.5)*(p[0]-0.5) + (p[1]-0.5)*(p[1]-0.5)));
     double cy = 0.5 * std::sin(5 * numbers::PI * p[0]) * std::cos(5 * numbers::PI * p[1]);
     return 50.0*cx + 30.0*cy;
@@ -147,11 +132,11 @@ Tensor<1, dim> b_coefficient(const Point<dim> &p)
     double vort_y = -strength * (p[0]-x0);
 
     // componente ondulata
-    double wave_x = 50 * std::sin(k * p[1]);
-    double wave_y = 50 * std::cos(k * p[0]);
+    double onda_x = 50 * std::sin(k * p[1]);
+    double onda_y = 50 * std::cos(k * p[0]);
 
-    b[0] = vort_x + wave_x;
-    b[1] = vort_y + wave_y;
+    b[0] = vort_x + onda_x;
+    b[1] = vort_y + onda_y;
     return b;
 }
 
@@ -225,7 +210,7 @@ void DiffTras<dim>::setup_system()
 
 
   VectorTools::interpolate_boundary_values(dof_handler,
-    0,           // id della boundary
+    0,         
     Functions::ZeroFunction<dim>(),
     constraints);
   constraints.close();
@@ -315,7 +300,7 @@ void DiffTras<dim>::assemble_system()
                //INIZIO PARTE STABILIZZAZIONE 
                
                cell_matrix(i,j) += 
-               par.diffusione_coefficiente* par.diffusione_coefficiente* // -a^2
+               par.diffusione_coefficiente* par.diffusione_coefficiente* // a^2
                tau*                                                     //tau
                lap_i*                       //lap_phi_i(x_q)
                lap_j*                       //lap_phi_j(x_q)   
@@ -380,8 +365,7 @@ cell_rhs(i) +=tau*
 template <int dim>
 void DiffTras<dim>::solve()
 {
-  PreconditionSSOR<SparseMatrix<double>> preconditioner;
-  preconditioner.initialize(system_matrix, 1.2);
+  PreconditionIdentity preconditioner;
   SolverControl solver_control(10000000, 1e-12);
   SolverGMRES<Vector<double>> solver(solver_control);
   solver.solve(system_matrix, solution, system_rhs, preconditioner);

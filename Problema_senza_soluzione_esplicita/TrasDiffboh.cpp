@@ -1,7 +1,10 @@
 /*
-In questo file si va a risolvere un problema differenziale di tipo trasporto diffusione e reazione.
-E' applicato il metodo gls perchè necessario di stabilizzazione.
-Il caso studiato è di tipo diffusione dominato.
+Problema di trasporto–diffusione–reazione con campo di trasporto intenso
+e diffusione ridotta.
+Non sappiamo la soluzione esatta.
+Il problema è risolto con formulazione Galerkin
+standard, senza stabilizzazione, al fine di evidenziare eventuali
+oscillazioni numeriche.
 */
 
 #include <deal.II/base/function.h>
