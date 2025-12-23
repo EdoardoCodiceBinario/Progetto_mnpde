@@ -13,10 +13,9 @@ u = 0 & \partial\Omega.
 \end{cases}
 $$
 
-Se si prova a risolvere rispetto ai metodi Galerkin standard il problema si nota che per valori di a che tendono a 0, e per valori
-di b che crescono vengono introdotte oscillazioni numeriche nel sistema che portano a non ottenere una convergenza iterativa.
+Risolvendo il problema mediante metodi di Galerkin standard, si osserva che per valori di $a$ tendenti a zero e per valori crescenti di $b$ compaiono oscillazioni numeriche che impediscono la convergenza iterativa.
 
-I metodi che vengono dunque proposti sono metodi di Petrov Galerkin, detti di **stabilizzazione**, non nel senso usuale ma il termine indica l'eliminazione del rumore introdotto.
+I metodi che vengono dunque proposti sono metodi di Petrov Galerkin, detti di **stabilizzazione**, non nel senso usuale del termine, ma come eliminazione delle oscillazioni numeriche introdotte dalla discretizzazione.
 
 I metodi che sono presentati sono il Galerkin Least Square(GLS) e lo Streamline Upwind Petrov Galerkin(SUPG).
 
@@ -49,7 +48,7 @@ u = u(x,y) &  \partial\Omega.
 $$
 
 
-Per valori di $a < 0.125$ la dominazione del termine di trasporto è troppo pronunciata e
+Per valori di $a < 0.125$ la dominazione del termine di diffusione è troppo pronunciata e
 non si osserva convergenza iterativa.
 
 Questo esempio evidenzia le problematiche che insorgono quando si va a risolvere mediante metodi FEM Galerkin
@@ -110,7 +109,7 @@ $$\mathbf{b}(x,y) = b \cdot
 \end{bmatrix},$$
 
 E' stato dunque introdotto un parametro per il trasporto mentre quello di diffusione è stato posto a 0.025, si nota che per valori
-di $b>80$ il metodo GLS non converge, mentre il metodo SUPG mostra convergenza più che ottimale, facendo riferimento alla convergenza prevista da Lemma di Ceà e dal Lemma di Bramble-Hilbert.
+di $b>80$ il metodo GLS non converge, mentre il metodo SUPG mostra convergenza più che ottimale, facendo riferimento alla convergenza prevista da Lemma di Cèa e dal Lemma di Bramble-Hilbert.
 
 | File / Cartella | Descrizione |
 |-----------------|-------------|
@@ -172,8 +171,6 @@ $$
 u(x,y) = 0 & \partial\Omega.
 \end{cases}
 $$
-
-Dove le condizioni sono:
 
 
 | File / Cartella | Descrizione |
